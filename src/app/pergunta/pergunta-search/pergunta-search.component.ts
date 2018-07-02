@@ -25,8 +25,8 @@ export class PerguntaSearchComponent implements OnInit {
     private confirmation: ConfirmationService,
   ) { }
 
-  ngOnInit(
-  ) { }
+  ngOnInit() {
+   }
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
@@ -40,7 +40,7 @@ export class PerguntaSearchComponent implements OnInit {
         this.perguntas = resultado.perguntas;
       })
       .catch(erro => this.errorService.handle(erro)
-    );
+      );
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -67,10 +67,16 @@ export class PerguntaSearchComponent implements OnInit {
           this.pesquisar();
         }
 
-        this.messageService.add({severity:'sucess', detail: 'Pergunta ' + pergunta.id + ' - ' + pergunta.nome + ' excluída com sucesso!'});
+        this.messageService.add({ severity: 'sucess', detail: 'Pergunta ' + pergunta.id + ' - ' + pergunta.nome + ' excluída com sucesso!' });
       })
       .catch(erro => this.errorService.handle(erro)
-    );
+      );
+  }
+
+  display: boolean = false;
+
+  showDialog() {
+    this.display = true;
   }
 
 }

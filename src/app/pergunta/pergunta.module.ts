@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -23,6 +25,8 @@ import { PerguntaSearchComponent } from './pergunta-search/pergunta-search.compo
     DropdownModule,
     TableModule,
     TooltipModule,
+    DialogModule,
+    SelectButtonModule,
 
     SharedModule
   ],

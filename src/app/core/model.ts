@@ -4,3 +4,9 @@ export class Pergunta {
     descricao: string;
     tipo: string;
 }
+
+export class Opcao {
+    id: number;
+    nome: string;
+    pergunta: Pergunta;
+}

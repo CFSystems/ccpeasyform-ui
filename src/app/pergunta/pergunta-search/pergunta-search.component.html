@@ -1,3 +1,8 @@
+<p-dialog header="Nova Pergunta" [(visible)]="display" [modal]="true" [responsive]="false" [width]="750" [minWidth]="200" [minY]="150" [closeOnEscape]="false"
+  [closable]="false" [resizable]="false" [draggable]="true" [contentStyle]="{'overflow':'visible'}" [positionTop]="100">
+  <app-pergunta-add></app-pergunta-add>
+</p-dialog>
+
 <div class="container">
 
   <div class="ui-g">
@@ -6,6 +11,10 @@
 
       <div class="ui-g-12">
         <h1>Perguntas</h1>
+      </div>
+
+      <div class="ui-g-12">
+        <button type="button" (click)="showDialog()" pButton icon="fa fa-plus" label="Nova Pergunta"></button>
       </div>
 
       <div class="ui-g-12 ui-fluid">

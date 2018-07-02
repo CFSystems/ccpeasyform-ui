@@ -53,7 +53,7 @@ export class PerguntaService {
       .then(() => null);
   }
 
-  adicionar(pergunta: Pergunta): Promise<Pergunta> {
+  adicionarPergunta(pergunta: Pergunta): Promise<Pergunta> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
     headers.append('Content-Type', 'application/json');
@@ -61,6 +61,10 @@ export class PerguntaService {
     return this.http.post(this.perguntaUrl,
         JSON.stringify(pergunta), { headers })
       .toPromise()
-      .then(response => response.json());
+      .then(response => {
+        const resultado = response.json();
+        return resultado;
+      })
   }
+
 }
