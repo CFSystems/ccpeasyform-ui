@@ -1,14 +1,23 @@
+import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { PerguntaModule } from './pergunta/pergunta.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpModule,
+    
+    CoreModule,
+    PerguntaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
