@@ -47,6 +47,7 @@ export class PerguntaAddComponent implements OnInit {
           this.pergunta = new Pergunta();
           this.messageService.add({ severity: 'success', detail: 'Pergunta adicionada com sucesso!' });
           this.fecharDialog(form);
+          this.perguntaSearch.pesquisar();
         }
       })
       .catch(erro => this.errorService.handle(erro)
@@ -69,6 +70,7 @@ export class PerguntaAddComponent implements OnInit {
     }
     this.messageService.add({ severity: 'success', detail: 'Pergunta e opções adicionadas com sucesso!' });
     this.fecharDialog(form);
+    this.perguntaSearch.pesquisar();
   }
 
   fecharDialog(form: FormControl) {
