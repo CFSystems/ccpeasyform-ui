@@ -3,6 +3,7 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import { Pergunta, Opcao } from '../core/model';
+import { environment } from '../../environments/environment';
 
 export class PerguntaFiltro {
   nome: string;
@@ -13,10 +14,13 @@ export class PerguntaFiltro {
 @Injectable()
 export class PerguntaService {
 
-  perguntaUrl = 'http://localhost:8080/ccpeasyform-api/pergunta';
-  opcaoUrl = 'http://localhost:8080/ccpeasyform-api/opcao';
+  perguntaUrl: string;
+  opcaoUrl: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.perguntaUrl = `${environment.apiUrl}/ccpeasyform-api/pergunta`;
+    this.opcaoUrl = `${environment.apiUrl}/ccpeasyform-api/opcao`;
+  }
 
   pesquisar(filtro: PerguntaFiltro): Promise<any> {
     const params = new URLSearchParams();
