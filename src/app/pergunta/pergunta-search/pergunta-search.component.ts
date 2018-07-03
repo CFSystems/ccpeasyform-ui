@@ -16,6 +16,7 @@ export class PerguntaSearchComponent implements OnInit {
   totalRegistros = 0;
   filtro = new PerguntaFiltro();
   perguntas = [];
+  opcoes = [];
   @ViewChild('tabela') grid;
 
   constructor(
@@ -41,6 +42,14 @@ export class PerguntaSearchComponent implements OnInit {
       })
       .catch(erro => this.errorService.handle(erro)
       );
+  }
+
+  pesquisarOpcoes(id: number) {
+    this.perguntaService.pesquisarOpcao(id)
+      .then(resultado => {
+        this.opcoes = resultado;
+        console.log(JSON.stringify(this.opcoes));
+      })
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -77,6 +86,13 @@ export class PerguntaSearchComponent implements OnInit {
 
   showDialog() {
     this.display = true;
+  }
+
+  displayInfo: boolean = false;
+
+  showDialogInfo(id: number) {
+    this.pesquisarOpcoes(id);
+    this.displayInfo = true;
   }
 
 }

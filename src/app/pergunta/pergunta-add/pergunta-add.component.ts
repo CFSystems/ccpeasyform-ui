@@ -20,22 +20,12 @@ export class PerguntaAddComponent implements OnInit {
     { label: 'Texto', value: 'Texto' }
   ];
 
-  qtdOpcoes = [
-    { label: '2', value: 2 },
-    { label: '3', value: 3 },
-    { label: '4', value: 4 },
-    { label: '5', value: 5 },
-  ];
-
-  qtd: number;
-  opcao: string;
-
-  respostaTipo: String;
-  idPerguntaSalva: number;
-  perguntaSalva: boolean = false;
+  opcaoAdd: string;
+  listaOpcao = [];
+  opcao = new Opcao();
 
   pergunta = new Pergunta();
-  listaOpcao = [];
+  idPerguntaSalva: number;
 
   constructor(
     private perguntaService: PerguntaService,
@@ -48,35 +38,56 @@ export class PerguntaAddComponent implements OnInit {
   }
 
   salvarPergunta(form: FormControl) {
-    this.respostaTipo = this.pergunta.tipo;
-    this.perguntaSalva = true;
-    console.log(this.perguntaSalva);
-    //this.perguntaService.adicionarPergunta(this.pergunta)
-    //  .then(resultado => {
-    //    this.idPerguntaSalva = resultado.id;
-    //    this.perguntaSalva = true;
-    //    this.messageService.add({ severity: 'success', detail: 'Pergunta adicionada com sucesso!' });
-    //    this.pergunta = new Pergunta();
-    //    this.fecharDialog(form);
-    //  })
-    //  .catch(erro => this.errorService.handle(erro)
-    //  );
+    this.perguntaService.adicionarPergunta(this.pergunta)
+      .then(resultado => {
+        this.idPerguntaSalva = resultado.id;
+        if(this.listaOpcao.length != 0 && this.pergunta.tipo != "Texto") {
+          this.salvarOpcoes(form);
+        } else {
+          this.pergunta = new Pergunta();
+          this.messageService.add({ severity: 'success', detail: 'Pergunta adicionada com sucesso!' });
+          this.fecharDialog(form);
+        }
+      })
+      .catch(erro => this.errorService.handle(erro)
+    );
   }
-
-  //salvarOpcoes(form: FormControl){
-  //  
-  //}
+  
+  salvarOpcoes(form: FormControl) {
+    for (let op of this.listaOpcao) {
+      this.pergunta = new Pergunta();
+      this.opcao.nome = op;
+      this.pergunta.id = this.idPerguntaSalva;
+      this.opcao.pergunta = this.pergunta;
+      this.perguntaService.adicionarOpcao(this.opcao)
+        .then(() => {
+          this.pergunta = new Pergunta();
+          this.opcao = new Opcao ();
+        })
+        .catch(erro => this.errorService.handle(erro)
+        );
+    }
+    this.messageService.add({ severity: 'success', detail: 'Pergunta e opções adicionadas com sucesso!' });
+    this.fecharDialog(form);
+  }
 
   fecharDialog(form: FormControl) {
     form.reset();
+    this.listaOpcao = [];
     this.perguntaSearch.display = false;
   }
 
-  escrever() {
-    this.listaOpcao.push(
-      { nome: this.opcao }
-    )
-    console.log(this.listaOpcao.toString);
+  adicionarOpcao() {
+    if(this.opcaoAdd != undefined){
+      this.listaOpcao.push(this.opcaoAdd);
+      this.opcaoAdd = undefined;
+    } else {
+      this.messageService.add({ severity: 'warning', detail: 'O campo Opção precisa ser preenchido!' });
+    }
   }
 
+  excluirOpcao(nome: string) {
+    const index = this.listaOpcao.indexOf(nome);
+    this.listaOpcao.splice(index, 1);
+  }
 }

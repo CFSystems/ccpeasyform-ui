@@ -4,7 +4,7 @@
 
     <div class="ui-g-12 ui-fluid">
       <label>Nome</label>
-      <input pInputText type="text" name="nome" [(ngModel)]="pergunta.nome" #nome="ngModel" required minlength="5" [disabled]="perguntaSalva">
+      <input pInputText type="text" name="nome" [(ngModel)]="pergunta.nome" #nome="ngModel" required minlength="5">
 
       <app-message [control]="nome" error="required" text="Informe o nome"></app-message>
       <app-message [control]="nome" error="minlength" text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
@@ -12,8 +12,7 @@
 
     <div class="ui-g-12 ui-fluid">
       <label>Descrição</label>
-      <input pInputText type="text" name="descricao" [(ngModel)]="pergunta.descricao" #descricao="ngModel" required minlength="5"
-        [disabled]="perguntaSalva">
+      <input pInputText type="text" name="descricao" [(ngModel)]="pergunta.descricao" #descricao="ngModel" required minlength="5">
 
       <app-message [control]="descricao" error="required" text="Informe a descrição"></app-message>
       <app-message [control]="descricao" error="minlength" text="Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres"></app-message>
@@ -21,37 +20,33 @@
 
     <div class="ui-g-12 ui-fluid">
       <label>Tipo</label>
-      <p-dropdown name="tipo" [options]="tipos" [(ngModel)]="pergunta.tipo" [autoWidth]="false" placeholder="Selecione" #tipo [disabled]="perguntaSalva"></p-dropdown>
+      <p-dropdown name="tipo" [options]="tipos" [(ngModel)]="pergunta.tipo" [autoWidth]="false" placeholder="Selecione" #tipo required></p-dropdown>
+    </div>
+
+    <div *ngIf="pergunta.tipo === 'RespostaUnica' || pergunta.tipo === 'MultiplaEscolha'">
+      <div class="ui-g-12 ui-fluid">
+        <label>Opção</label>
+        <input pInputText type="text" name="opcaoAdd" [(ngModel)]="opcaoAdd">
+      </div>
+      <div class="ui-g-12">
+        <button pButton type="button" label="Adicionar Opção" (click)="adicionarOpcao()"></button>
+      </div>
+      <div class="ui-g-12" *ngFor="let op of listaOpcao">
+        <label>{{op}}</label>
+        <a pButton icon="fa fa-times" pTooltip="Excluir Opção" tooltipPosition="top" (click)="excluirOpcao(op)" class="ui-button-warning"></a>
+      </div>
+    </div>
+
+    <div *ngIf="pergunta.tipo === 'Texto' && listaOpcao.length > 0">
+      <div class="ui-g-12 ui-fluid">
+        <p-message severity="error" text="Favor excluir as opções adicionadas"></p-message>
+      </div>
     </div>
 
     <div class="ui-g-12">
-      <button pButton type="submit" label="Salvar Pergunta" [disabled]="formAddPergunta.invalid" [disabled]="perguntaSalva"></button>
-      <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="fecharDialog(formAddPergunta)" [disabled]="perguntaSalva"></button>
+      <button pButton type="submit" label="Salvar Pergunta" [disabled]="formAddPergunta.invalid || ((pergunta.tipo === 'RespostaUnica' || pergunta.tipo === 'MultiplaEscolha') && listaOpcao.length===0) || (pergunta.tipo === 'Texto' && listaOpcao.length > 0)"></button>
+      <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="fecharDialog(formAddPergunta)"></button>
     </div>
 
   </div>
 </form>
-
-<form #formAddOpcoes="ngForm" autocomplete="off" (ngSubmit)="salvarOpcoes(formAddOpcoes)">
-</form>
-<div class="ui-g" *ngIf="respostaTipo === 'RespostaUnica' || respostaTipo === 'MultiplaEscolha'">
-  <!--<div class="ui-g-12 ui-fluid">
-      <label>Quantidade de Opções</label>
-      <p-selectButton name="qtdOpcao" [options]="qtdOpcoes" [(ngModel)]="qtd" (click)="escrever()"></p-selectButton>
-    </div>-->
-
-  <!--<div *ngFor="let op of opcoes" class="ui-g-12 ui-fluid">-->
-  <label>Opção</label>
-  <input pInputText type="text" name="opcao">
-  <button pButton type="submit" label="Adicionar Opção" (click)="escrever()"></button>
-  <!--</div>-->
-
-  <div *ngFor="let op of listaOpcao" class="ui-g-12 ui-fluid">
-    <label>{{op.nome}}</label>
-  </div>
-
-  <div class="ui-g-12">
-    <button pButton type="submit" label="Salvar" [disabled]="formAddOpcoes.invalid"></button>
-    <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="fecharDialog(formAddOpcoes)"></button>
-  </div>
-</div>

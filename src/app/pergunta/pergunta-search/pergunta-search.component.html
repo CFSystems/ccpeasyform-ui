@@ -1,6 +1,14 @@
-<p-dialog header="Nova Pergunta" [(visible)]="display" [modal]="true" [responsive]="false" [width]="750" [minWidth]="200" [minY]="150" [closeOnEscape]="false"
-  [closable]="false" [resizable]="false" [draggable]="true" [contentStyle]="{'overflow':'visible'}" [positionTop]="100">
+<p-dialog header="Nova Pergunta" [(visible)]="display" [modal]="true" [responsive]="false" [width]="750" [minWidth]="200"
+  [minY]="150" [closeOnEscape]="false" [closable]="false" [resizable]="false" [draggable]="true" [contentStyle]="{'overflow':'visible'}"
+  [positionTop]="100">
   <app-pergunta-add></app-pergunta-add>
+</p-dialog>
+
+<p-dialog header="Opções" [(visible)]="displayInfo" [modal]="true" [responsive]="false" [width]="750" [minWidth]="200" [minY]="150"
+  [closeOnEscape]="false" [resizable]="false" [draggable]="true" [contentStyle]="{'overflow':'visible'}" [positionTop]="100">
+  <div *ngFor="let opcao of opcoes">
+    <label>{{opcao.nome}}</label>
+  </div>
 </p-dialog>
 
 <div class="container">
@@ -14,7 +22,7 @@
       </div>
 
       <div class="ui-g-12">
-        <button type="button" (click)="showDialog()" pButton icon="fa fa-plus" label="Nova Pergunta"></button>
+        <button pButton type="button" (click)="showDialog()" icon="fa fa-plus" label="Nova Pergunta" class="ui-button-success"></button>
       </div>
 
       <div class="ui-g-12 ui-fluid">
@@ -49,8 +57,9 @@
             <td>{{pergunta.descricao}}</td>
             <td>{{pergunta.tipo}}</td>
             <td styleClass="col-acoes">
-              <a pButton icon="fa fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="fa fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pergunta)"></button>
+              <!--<a pButton icon="fa fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button pButton icon="fa fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pergunta)"></button>-->
+              <button *ngIf="pergunta.tipo === 'RespostaUnica' || pergunta.tipo === 'MultiplaEscolha'" pButton icon="fa fa-info" pTooltip="Opcões" tooltipPosition="top" (click)="showDialogInfo(pergunta.id)"></button>
             </td>
           </tr>
         </ng-template>

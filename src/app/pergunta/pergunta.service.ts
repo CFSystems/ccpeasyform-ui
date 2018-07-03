@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
-import { Pergunta } from '../core/model';
+import { Pergunta, Opcao } from '../core/model';
 
 export class PerguntaFiltro {
   nome: string;
   pagina = 0;
-  itensPorPagina = 5;
+  itensPorPagina = 10;
 }
 
 @Injectable()
 export class PerguntaService {
 
   perguntaUrl = 'http://localhost:8080/ccpeasyform-api/pergunta';
+  opcaoUrl = 'http://localhost:8080/ccpeasyform-api/opcao';
 
   constructor(private http: Http) { }
 
@@ -44,6 +45,22 @@ export class PerguntaService {
       })
   }
 
+  pesquisarOpcao(id: number): Promise<any> {
+    const params = new URLSearchParams();
+    const headers = new Headers();
+
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+
+    params.set('id', id.toString());
+
+    return this.http.get(`${this.opcaoUrl}?`, { headers, search: params })
+      .toPromise()
+      .then(response => {
+        const resultado = response.json();
+        return resultado;
+      })
+  }
+
   excluir(id: number): Promise<void> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
@@ -59,12 +76,23 @@ export class PerguntaService {
     headers.append('Content-Type', 'application/json');
 
     return this.http.post(this.perguntaUrl,
-        JSON.stringify(pergunta), { headers })
+      JSON.stringify(pergunta), { headers })
       .toPromise()
       .then(response => {
         const resultado = response.json();
         return resultado;
       })
+  }
+
+  adicionarOpcao(opcao: Opcao): Promise<Pergunta> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.opcaoUrl,
+      JSON.stringify(opcao), { headers })
+      .toPromise()
+      .then(response => response.json());
   }
 
 }
