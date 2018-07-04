@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Pergunta, Opcao } from '../../core/model';
 import { PerguntaService } from '../pergunta.service';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { ErrorHandlerService } from '../../core/error-handler.service';
-import { PerguntaSearchComponent } from '../pergunta-search/pergunta-search.component';
 
 @Component({
   selector: 'app-pergunta-add',
@@ -23,15 +22,17 @@ export class PerguntaAddComponent implements OnInit {
   opcaoAdd: string;
   listaOpcao = [];
   opcao = new Opcao();
-
   pergunta = new Pergunta();
   idPerguntaSalva: number;
+  @Input() perguntaEditar: Pergunta;
+  @Input() editando: boolean;
+
+  @Output() displayDialog = new EventEmitter;
 
   constructor(
     private perguntaService: PerguntaService,
     private messageService: MessageService,
-    private errorService: ErrorHandlerService,
-    private perguntaSearch: PerguntaSearchComponent
+    private errorService: ErrorHandlerService
   ) { }
 
   ngOnInit() {
@@ -41,19 +42,30 @@ export class PerguntaAddComponent implements OnInit {
     this.perguntaService.adicionarPergunta(this.pergunta)
       .then(resultado => {
         this.idPerguntaSalva = resultado.id;
-        if(this.listaOpcao.length != 0 && this.pergunta.tipo != "Texto") {
+        if (this.listaOpcao.length != 0 && this.pergunta.tipo != "Texto") {
           this.salvarOpcoes(form);
         } else {
           this.pergunta = new Pergunta();
           this.messageService.add({ severity: 'success', detail: 'Pergunta adicionada com sucesso!' });
-          this.fecharDialog(form);
-          this.perguntaSearch.pesquisar();
+          this.finalizar(form);
         }
       })
       .catch(erro => this.errorService.handle(erro)
-    );
+      );
   }
-  
+
+  atualizarPergunta(form: FormControl) {
+    this.perguntaService.atualizarPergunta(this.perguntaEditar)
+      .then(() => {
+        this.perguntaEditar = new Pergunta();
+        this.messageService.add({ severity: 'success', detail: 'Pergunta atualizada com sucesso!' });
+        this.displayDialog.emit(false);
+        this.finalizar(form);
+      })
+      .catch(erro => this.errorService.handle(erro)
+      );
+  }
+
   salvarOpcoes(form: FormControl) {
     for (let op of this.listaOpcao) {
       this.pergunta = new Pergunta();
@@ -63,24 +75,17 @@ export class PerguntaAddComponent implements OnInit {
       this.perguntaService.adicionarOpcao(this.opcao)
         .then(() => {
           this.pergunta = new Pergunta();
-          this.opcao = new Opcao ();
+          this.opcao = new Opcao();
         })
         .catch(erro => this.errorService.handle(erro)
         );
     }
     this.messageService.add({ severity: 'success', detail: 'Pergunta e opções adicionadas com sucesso!' });
-    this.fecharDialog(form);
-    this.perguntaSearch.pesquisar();
-  }
-
-  fecharDialog(form: FormControl) {
-    form.reset();
-    this.listaOpcao = [];
-    this.perguntaSearch.display = false;
+    this.finalizar(form);
   }
 
   adicionarOpcao() {
-    if(this.opcaoAdd != undefined){
+    if (this.opcaoAdd != undefined) {
       this.listaOpcao.push(this.opcaoAdd);
       this.opcaoAdd = undefined;
     } else {
@@ -92,4 +97,11 @@ export class PerguntaAddComponent implements OnInit {
     const index = this.listaOpcao.indexOf(nome);
     this.listaOpcao.splice(index, 1);
   }
+
+  finalizar(form: FormControl) {
+    form.reset();
+    this.listaOpcao = [];
+    this.displayDialog.emit(false);
+  }
+
 }

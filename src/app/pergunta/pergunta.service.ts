@@ -17,12 +17,15 @@ export class PerguntaService {
   perguntaUrl: string;
   opcaoUrl: string;
 
+  private pergunta = new Pergunta();
+
+
   constructor(private http: Http) {
     this.perguntaUrl = `${environment.apiUrl}/ccpeasyform-api/pergunta`;
     this.opcaoUrl = `${environment.apiUrl}/ccpeasyform-api/opcao`;
   }
 
-  pesquisar(filtro: PerguntaFiltro): Promise<any> {
+  pesquisarPergunta(filtro: PerguntaFiltro): Promise<any> {
     const params = new URLSearchParams();
     const headers = new Headers();
 
@@ -49,6 +52,18 @@ export class PerguntaService {
       })
   }
 
+  persquisarPerguntaPorId(id: number): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+
+    return this.http.get(`${this.perguntaUrl}/${id}`, { headers })
+      .toPromise()
+      .then(response => {
+        const resultado = response.json();
+        return resultado;
+      })
+  }
+
   pesquisarOpcao(id: number): Promise<any> {
     const params = new URLSearchParams();
     const headers = new Headers();
@@ -65,7 +80,7 @@ export class PerguntaService {
       })
   }
 
-  excluir(id: number): Promise<void> {
+  excluirPergunta(id: number): Promise<void> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
 
@@ -97,6 +112,25 @@ export class PerguntaService {
       JSON.stringify(opcao), { headers })
       .toPromise()
       .then(response => response.json());
+  }
+
+  atualizarPergunta(pergunta: Pergunta): Promise<Pergunta> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.perguntaUrl}/${pergunta.id}`,
+        JSON.stringify(pergunta), { headers })
+      .toPromise()
+      .then(response => {
+        const perguntaAlterada = response.json() as Pergunta;
+        return perguntaAlterada;
+      });
+  }
+
+  editarPergunta(pergunta: Pergunta) {
+    this.pergunta = pergunta;
+    console.log(JSON.stringify(this.pergunta));
   }
 
 }

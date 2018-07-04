@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 
 import { PerguntaService, PerguntaFiltro } from '../pergunta.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
+import { Pergunta } from '../../core/model';
 
 @Component({
   selector: 'app-pergunta-search',
@@ -19,11 +20,14 @@ export class PerguntaSearchComponent implements OnInit {
   opcoes = [];
   @ViewChild('tabela') grid;
 
+  perguntaEdit = new Pergunta();
+  editando: boolean;
+
   constructor(
     private perguntaService: PerguntaService,
     private errorService: ErrorHandlerService,
     private messageService: MessageService,
-    private confirmation: ConfirmationService,
+    private confirmation: ConfirmationService
   ) { }
 
   ngOnInit() {
@@ -35,7 +39,7 @@ export class PerguntaSearchComponent implements OnInit {
       this.grid.first = 0;
     }
 
-    this.perguntaService.pesquisar(this.filtro)
+    this.perguntaService.pesquisarPergunta(this.filtro)
       .then(resultado => {
         this.totalRegistros = resultado.total;
         this.perguntas = resultado.perguntas;
@@ -48,7 +52,6 @@ export class PerguntaSearchComponent implements OnInit {
     this.perguntaService.pesquisarOpcao(id)
       .then(resultado => {
         this.opcoes = resultado;
-        console.log(JSON.stringify(this.opcoes));
       })
   }
 
@@ -67,7 +70,7 @@ export class PerguntaSearchComponent implements OnInit {
   }
 
   excluir(pergunta: any) {
-    this.perguntaService.excluir(pergunta.id)
+    this.perguntaService.excluirPergunta(pergunta.id)
       .then(() => {
         if (this.grid.first === 0) {
           this.pesquisar();
@@ -83,13 +86,25 @@ export class PerguntaSearchComponent implements OnInit {
   }
 
   display: boolean = false;
-
-  showDialog() {
+  abrirDialogPergunta(editando: boolean, id: number) {
+    this.editando = editando;
     this.display = true;
+    if(editando){
+      this.perguntaService.persquisarPerguntaPorId(id)
+      .then(resultado => {
+        this.perguntaEdit = resultado;
+      })
+      .catch(erro => this.errorService.handle(erro)
+      );
+    }
+  }
+
+  fecharDialogPergunta(display: boolean){
+    this.display = display;
+    this.pesquisar();
   }
 
   displayInfo: boolean = false;
-
   showDialogInfo(id: number) {
     this.pesquisarOpcoes(id);
     this.displayInfo = true;

@@ -1,4 +1,4 @@
-<form #formAddPergunta="ngForm" autocomplete="off" (ngSubmit)="salvarPergunta(formAddPergunta)">
+<form #formAddPergunta="ngForm" autocomplete="off" (ngSubmit)="salvarPergunta(formAddPergunta)" *ngIf="!editando">
 
   <div class="ui-g">
 
@@ -45,7 +45,40 @@
 
     <div class="ui-g-12">
       <button pButton type="submit" label="Salvar Pergunta" [disabled]="formAddPergunta.invalid || ((pergunta.tipo === 'RespostaUnica' || pergunta.tipo === 'MultiplaEscolha') && listaOpcao.length===0) || (pergunta.tipo === 'Texto' && listaOpcao.length > 0)"></button>
-      <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="fecharDialog(formAddPergunta)"></button>
+      <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="finalizar(formAddPergunta)"></button>
+    </div>
+
+  </div>
+</form>
+
+<form #formEditPergunta="ngForm" autocomplete="off" (ngSubmit)="atualizarPergunta(formEditPergunta)" *ngIf="editando">
+
+  <div class="ui-g">
+
+    <div class="ui-g-12 ui-fluid">
+      <label>ID</label>
+      <input pInputText type="text" name="id" [(ngModel)]="perguntaEditar.id" #id="ngModel" disabled="true" required>
+    </div>
+
+    <div class="ui-g-12 ui-fluid">
+      <label>Nome</label>
+      <input pInputText type="text" name="nome" [(ngModel)]="perguntaEditar.nome" #nome="ngModel" required minlength="5">
+
+      <app-message [control]="nome" error="required" text="Informe o nome"></app-message>
+      <app-message [control]="nome" error="minlength" text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+    </div>
+
+    <div class="ui-g-12 ui-fluid">
+      <label>Descrição</label>
+      <input pInputText type="text" name="descricao" [(ngModel)]="perguntaEditar.descricao" #descricao="ngModel" required minlength="5">
+
+      <app-message [control]="descricao" error="required" text="Informe a descrição"></app-message>
+      <app-message [control]="descricao" error="minlength" text="Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres"></app-message>
+    </div>
+
+    <div class="ui-g-12">
+      <button pButton type="submit" label="Salvar Pergunta" [disabled]="formEditPergunta.invalid"></button>
+      <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="finalizar(formEditPergunta)"></button>
     </div>
 
   </div>
