@@ -14,5 +14,6 @@ export class Opcao {
 export class Formulario {
     id: number;
     nome: string;
+    ativo: boolean;
     perguntas: Array<Pergunta>;
 }
