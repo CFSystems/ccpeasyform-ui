@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { PerguntaModule } from './pergunta/pergunta.module';
+import { FormularioModule } from './formulario/formulario.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PerguntaModule } from './pergunta/pergunta.module';
     HttpModule,
     
     CoreModule,
-    PerguntaModule
+    PerguntaModule,
+    FormularioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

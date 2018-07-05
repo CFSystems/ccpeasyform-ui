@@ -1,0 +1,37 @@
+<form #formAddFormulario="ngForm" autocomplete="off" (ngSubmit)="salvarFormulario(formAddFormulario)">
+  <div class="container">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-fluid" *ngIf="editando">
+        <label>ID</label>
+        <input pInputText type="text" name="id" [(ngModel)]="formulario.id" #id="ngModel" disabled>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" [(ngModel)]="formulario.nome" #nome="ngModel">
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Status</label>
+        <p-inputSwitch name="ativo" [(ngModel)]="formulario.ativo" #ativo="ngModel"></p-inputSwitch>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <p-pickList [source]="perguntasSource" [target]="perguntasTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
+          sourceHeader="Perguntas Disponiveis" targetHeader="Perguntas Selecionadas" [responsive]="true" filterBy="nome" dragdrop="true"
+          sourceFilterPlaceholder="Procure pelo nome" targetFilterPlaceholder="Procure pelo nome">
+          <ng-template let-pergunta pTemplate="item">
+            <div class="ui-helper-clearfix">
+              {{ pergunta.id }} - {{ pergunta.nome }}
+            </div>
+          </ng-template>
+        </p-pickList>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar"></button>
+        <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="finalizar(formAddFormulario)"></button>
+      </div>
+    </div>
+  </div>
+</form>

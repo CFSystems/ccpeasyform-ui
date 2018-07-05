@@ -79,7 +79,7 @@ export class PerguntaSearchComponent implements OnInit {
           this.pesquisar();
         }
 
-        this.messageService.add({ severity: 'sucess', detail: 'Pergunta ' + pergunta.id + ' - ' + pergunta.nome + ' excluída com sucesso!' });
+        this.messageService.add({ severity: 'success', detail: 'Pergunta ' + pergunta.id + ' - ' + pergunta.nome + ' excluída com sucesso!' });
       })
       .catch(erro => this.errorService.handle(erro)
       );
@@ -90,7 +90,7 @@ export class PerguntaSearchComponent implements OnInit {
     this.editando = editando;
     this.display = true;
     if(editando){
-      this.perguntaService.persquisarPerguntaPorId(id)
+      this.perguntaService.pesquisarPerguntaPorId(id)
       .then(resultado => {
         this.perguntaEdit = resultado;
       })

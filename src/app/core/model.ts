@@ -10,3 +10,9 @@ export class Opcao {
     nome: string;
     pergunta: Pergunta;
 }
+
+export class Formulario {
+    id: number;
+    nome: string;
+    perguntas: Array<Pergunta>;
+}

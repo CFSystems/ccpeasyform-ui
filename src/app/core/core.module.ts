@@ -9,6 +9,7 @@ import { PerguntaService } from '../pergunta/pergunta.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/components/common/api';
+import { FormularioService } from '../formulario/formulario.service';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ConfirmationService } from 'primeng/components/common/api';
   providers: [
     ErrorHandlerService,
     PerguntaService,
+    FormularioService,
 
     MessageService,
     ConfirmationService,

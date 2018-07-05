@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 export class PerguntaFiltro {
   nome: string;
   pagina = 0;
-  itensPorPagina = 10;
+  itensPorPagina = 5;
 }
 
 @Injectable()
@@ -52,7 +52,7 @@ export class PerguntaService {
       })
   }
 
-  persquisarPerguntaPorId(id: number): Promise<any> {
+  pesquisarPerguntaPorId(id: number): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
 
@@ -131,6 +131,15 @@ export class PerguntaService {
   editarPergunta(pergunta: Pergunta) {
     this.pergunta = pergunta;
     console.log(JSON.stringify(this.pergunta));
+  }
+
+  listarTodas(): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+
+    return this.http.get(this.perguntaUrl, { headers })
+      .toPromise()
+      .then(response => response.json().content);
   }
 
 }
