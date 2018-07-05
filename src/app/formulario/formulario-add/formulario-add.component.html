@@ -1,12 +1,12 @@
 <form #formAddFormulario="ngForm" autocomplete="off" (ngSubmit)="salvarFormulario(formAddFormulario)">
   <div class="container">
     <div class="ui-g">
-      <div class="ui-g-12 ui-fluid" *ngIf="editando">
+      <div class="ui-g-3 ui-fluid" *ngIf="editando">
         <label>ID</label>
         <input pInputText type="text" name="id" [(ngModel)]="formulario.id" #id="ngModel" disabled>
       </div>
 
-      <div class="ui-g-12 ui-fluid">
+      <div class="ui-g-9 ui-fluid">
         <label>Nome</label>
         <input pInputText type="text" name="nome" [(ngModel)]="formulario.nome" #nome="ngModel">
       </div>
@@ -17,7 +17,7 @@
       </div>
 
       <div class="ui-g-12 ui-fluid">
-        <p-pickList [source]="perguntasSource" [target]="perguntasTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
+        <p-pickList [source]="perguntasSource" [target]="editando ? perguntasTargetEdit : perguntasTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
           sourceHeader="Perguntas Disponiveis" targetHeader="Perguntas Selecionadas" [responsive]="true" filterBy="nome" dragdrop="true"
           sourceFilterPlaceholder="Procure pelo nome" targetFilterPlaceholder="Procure pelo nome">
           <ng-template let-pergunta pTemplate="item">

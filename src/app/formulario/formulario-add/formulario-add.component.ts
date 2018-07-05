@@ -14,7 +14,8 @@ import { MessageService } from 'primeng/components/common/messageservice';
 export class FormularioAddComponent implements OnInit {
 
   perguntasSource = [];
-  @Input() perguntasTarget = [];
+  perguntasTarget = []
+  @Input() perguntasTargetEdit = [];
 
   @Input() formulario = new Formulario();
   @Input() editando: boolean;
@@ -41,7 +42,11 @@ export class FormularioAddComponent implements OnInit {
   }
 
   salvarFormulario(form: FormControl) {
-    this.formulario.perguntas = this.perguntasTarget;
+    if(this.editando){
+      this.formulario.perguntas = this.perguntasTargetEdit;
+    } else {
+      this.formulario.perguntas = this.perguntasTarget;
+    }
     this.formularioService.adicionarFormulario(this.formulario)
       .then(resultado => {
         this.messageService.add({ severity: 'success', detail: 'Formuário adicionado com sucesso!' });
@@ -54,6 +59,8 @@ export class FormularioAddComponent implements OnInit {
   finalizar(form: FormControl) {
     form.reset();
     this.perguntasTarget = [];
+    this.perguntasTargetEdit = [];
+    this.carregarPerguntas();
     this.displayDialog.emit(false);
   }
 }

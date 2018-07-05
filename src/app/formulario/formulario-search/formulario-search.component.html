@@ -1,7 +1,7 @@
-<p-dialog [header]="editando ? 'Editar Formulário' : 'Novo Formulário'" [(visible)]="display" [modal]="true" [responsive]="false" [width]="1250" [minWidth]="200"
-  [minY]="150" [closeOnEscape]="false" [closable]="false" [resizable]="false" [draggable]="true" [contentStyle]="{'overflow':'visible'}"
-  [positionTop]="100">
-  <app-formulario-add [formulario]="formularioEdit" [perguntasTarget]="formularioEdit.perguntas" [editando]="editando" (displayDialog)="fecharDialogFormulario($event)"></app-formulario-add>
+<p-dialog [header]="editando ? 'Editar Formulário' : 'Novo Formulário'" [(visible)]="display" modal="true" [responsive]="true"
+  width="1250" height="630" [closeOnEscape]="false" [closable]="false">
+  <app-formulario-add [formulario]="formularioEdit" [perguntasTargetEdit]="formularioEdit.perguntas" [editando]="editando"
+    (displayDialog)="fecharDialogFormulario($event)"></app-formulario-add>
 </p-dialog>
 
 <p-dialog header="Perguntas" [(visible)]="displayInfo" [modal]="true" [responsive]="false" [width]="750" [minWidth]="200"
