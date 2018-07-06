@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 import { GrowlModule } from 'primeng/growl';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { PerguntaService } from '../pergunta/pergunta.service';
 import { ErrorHandlerService } from './error-handler.service';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/components/common/api';
 import { FormularioService } from '../formulario/formulario.service';
+import { CampanhaService } from '../campanha/campanha.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { FormularioService } from '../formulario/formulario.service';
     ErrorHandlerService,
     PerguntaService,
     FormularioService,
+    CampanhaService,
 
     MessageService,
     ConfirmationService,

@@ -2,26 +2,26 @@ import { Injectable } from '@angular/core';
 import { Http, URLSearchParams, Headers } from '@angular/http';
 
 import { environment } from '../../environments/environment';
-import { Formulario } from '../core/model';
+import { Campanha } from '../core/model';
 
-export class FormularioFiltro {
+export class CampanhaFiltro {
   nome: string;
   pagina = 0;
   itensPorPagina = 5;
 }
 
 @Injectable()
-export class FormularioService {
+export class CampanhaService {
 
-  formularioUrl: string;
+  campanhaUrl: string;
 
-  private formulario = new Formulario;
+  private campanha = new Campanha;
 
   constructor(private http: Http) {
-    this.formularioUrl = `${environment.apiUrl}/ccpeasyform-api/formulario`;
+    this.campanhaUrl = `${environment.apiUrl}/ccpeasyform-api/campanha`;
   }
 
-  pesquisarFormulario(filtro: FormularioFiltro): Promise<any> {
+  pesquisarCampanha(filtro: CampanhaFiltro): Promise<any> {
     const params = new URLSearchParams();
     const headers = new Headers();
 
@@ -34,13 +34,13 @@ export class FormularioService {
       params.set('nome', filtro.nome);
     }
 
-    return this.http.get(`${this.formularioUrl}?`, { headers, search: params })
+    return this.http.get(`${this.campanhaUrl}?`, { headers, search: params })
       .toPromise()
       .then(response => {
         const responseJson = response.json();
 
         const resultado = {
-          formularios: responseJson.content,
+          campanhas: responseJson.content,
           total: responseJson.totalElements
         };
 
@@ -48,11 +48,11 @@ export class FormularioService {
       })
   }
 
-  pesquisarFormularioPorId(id: number): Promise<any> {
+  pesquisarCampanhaPorId(id: number): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
 
-    return this.http.get(`${this.formularioUrl}/${id}`, { headers })
+    return this.http.get(`${this.campanhaUrl}/${id}`, { headers })
       .toPromise()
       .then(response => {
         const resultado = response.json();
@@ -60,37 +60,17 @@ export class FormularioService {
       })
   }
 
-  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
+  adicionarCampanha(campanha: Campanha): Promise<Campanha> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
     headers.append('Content-Type', 'application/json');
 
-    return this.http.put(`${this.formularioUrl}/${codigo}/ativo`, ativo, { headers })
-      .toPromise()
-      .then(() => null);
-  }
-
-  adicionarFormulario(formulario: Formulario): Promise<Formulario> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.formularioUrl,
-      JSON.stringify(formulario), { headers })
+    return this.http.post(this.campanhaUrl,
+      JSON.stringify(campanha), { headers })
       .toPromise()
       .then(response => {
         const resultado = response.json();
         return resultado;
       })
   }
-
-  listarTodas(): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.get(this.formularioUrl, { headers })
-      .toPromise()
-      .then(response => response.json().content);
-  }
-
 }

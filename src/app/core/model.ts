@@ -17,3 +17,13 @@ export class Formulario {
     ativo: boolean;
     perguntas: Array<Pergunta>;
 }
+
+export class Campanha {
+    id: number;
+    nome: string;
+    cliente: string;
+    dataInicio: Date;
+    dataTermino: Date;
+    status: string;
+    formularios: Array<Formulario>;
+}

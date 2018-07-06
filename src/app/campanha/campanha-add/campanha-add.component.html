@@ -1,0 +1,42 @@
+<form #formAddCampanha="ngForm" autocomplete="off" (ngSubmit)="salvarCampanha(formAddCampanha)">
+    <div class="container">
+      <div class="ui-g">
+        <div class="ui-g-3 ui-fluid" *ngIf="editando">
+          <label>ID</label>
+          <input pInputText type="text" name="id" [(ngModel)]="campanha.id" #id="ngModel" disabled>
+        </div>
+  
+        <div class="ui-g-9 ui-fluid">
+          <label>Nome</label>
+          <input pInputText type="text" name="nome" [(ngModel)]="campanha.nome" #nome="ngModel">
+        </div>
+
+        <div class="ui-g-9 ui-fluid">
+            <label>Cliente</label>
+            <input pInputText type="text" name="cliente" [(ngModel)]="campanha.cliente" #cliente="ngModel">
+          </div>
+
+        <div class="ui-g-3 ui-fluid">
+            <label>Status</label>
+            <p-dropdown name="status" [options]="listaStatus" [(ngModel)]="campanha.status" [autoWidth]="false" placeholder="Selecione" #status required></p-dropdown>
+          </div>
+  
+        <div class="ui-g-12 ui-fluid">
+          <p-pickList [source]="formulariosSource" [target]="editando ? formulariosTargetEdit : formulariosTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
+            sourceHeader="Formulários Disponiveis" targetHeader="Formulários Selecionados" [responsive]="true" filterBy="nome" dragdrop="true"
+            sourceFilterPlaceholder="Procure pelo nome" targetFilterPlaceholder="Procure pelo nome">
+            <ng-template let-formulario pTemplate="item">
+              <div class="ui-helper-clearfix">
+                {{ formulario.id }} - {{ formulario.nome }}
+              </div>
+            </ng-template>
+          </p-pickList>
+        </div>
+  
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Salvar"></button>
+          <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="finalizar(formAddCampanha)"></button>
+        </div>
+      </div>
+    </div>
+  </form>

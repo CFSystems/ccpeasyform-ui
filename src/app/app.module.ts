@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { PerguntaModule } from './pergunta/pergunta.module';
 import { FormularioModule } from './formulario/formulario.module';
+import { CampanhaModule } from './campanha/campanha.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormularioModule } from './formulario/formulario.module';
     
     CoreModule,
     PerguntaModule,
-    FormularioModule
+    FormularioModule,
+    CampanhaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
