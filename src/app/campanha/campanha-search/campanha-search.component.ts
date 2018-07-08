@@ -77,4 +77,12 @@ export class CampanhaSearchComponent implements OnInit {
     this.pesquisar();
   }
 
+  atualizarStatus(campanha: any): void {
+    this.campanhaService.mudarStatus(campanha.id)
+      .then(() => {
+        this.messageService.add({ severity: 'success', detail: 'Status da campanha ' +campanha.nome+ ' alterado com sucesso!'})
+        this.pesquisar(this.filtro.pagina);
+      })
+      .catch(erro => this.errorService.handle(erro));
+  }
 }

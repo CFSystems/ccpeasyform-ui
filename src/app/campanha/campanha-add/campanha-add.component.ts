@@ -13,12 +13,6 @@ import { FormControl } from '@angular/forms';
 })
 export class CampanhaAddComponent implements OnInit {
 
-  listaStatus = [
-    { label: 'Em Andamento', value: 'Em Andamento' },
-    { label: 'Pendente', value: 'Pendente' },
-    { label: 'Concluída', value: 'Concluída' }
-  ];
-
   formulariosSource = [];
   formulariosTarget = []
   @Input() formulariosTargetEdit = [];
@@ -53,6 +47,7 @@ export class CampanhaAddComponent implements OnInit {
     } else {
       this.campanha.formularios = this.formulariosTarget;
     }
+    this.campanha.status = "Pendente";
     this.campanhaService.adicionarCampanha(this.campanha)
       .then(resultado => {
         this.messageService.add({ severity: 'success', detail: 'Campanha adicionada com sucesso!' });

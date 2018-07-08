@@ -15,11 +15,6 @@
             <label>Cliente</label>
             <input pInputText type="text" name="cliente" [(ngModel)]="campanha.cliente" #cliente="ngModel">
           </div>
-
-        <div class="ui-g-3 ui-fluid">
-            <label>Status</label>
-            <p-dropdown name="status" [options]="listaStatus" [(ngModel)]="campanha.status" [autoWidth]="false" placeholder="Selecione" #status required></p-dropdown>
-          </div>
   
         <div class="ui-g-12 ui-fluid">
           <p-pickList [source]="formulariosSource" [target]="editando ? formulariosTargetEdit : formulariosTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"

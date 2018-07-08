@@ -73,4 +73,13 @@ export class CampanhaService {
         return resultado;
       })
   }
+
+  mudarStatus(id: number): Promise<void> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+
+    return this.http.put(`${this.campanhaUrl}/${id}/mudarStatus`, null, { headers })
+      .toPromise()
+      .then(() => null);
+  }
 }

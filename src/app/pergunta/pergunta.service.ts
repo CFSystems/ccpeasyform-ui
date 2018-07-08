@@ -64,31 +64,6 @@ export class PerguntaService {
       })
   }
 
-  pesquisarOpcao(id: number): Promise<any> {
-    const params = new URLSearchParams();
-    const headers = new Headers();
-
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    params.set('id', id.toString());
-
-    return this.http.get(`${this.opcaoUrl}?`, { headers, search: params })
-      .toPromise()
-      .then(response => {
-        const resultado = response.json();
-        return resultado;
-      })
-  }
-
-  excluirPergunta(id: number): Promise<void> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.delete(`${this.perguntaUrl}/${id}`, { headers })
-      .toPromise()
-      .then(() => null);
-  }
-
   adicionarPergunta(pergunta: Pergunta): Promise<Pergunta> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
@@ -131,6 +106,15 @@ export class PerguntaService {
   editarPergunta(pergunta: Pergunta) {
     this.pergunta = pergunta;
     console.log(JSON.stringify(this.pergunta));
+  }
+
+  excluirPergunta(id: number): Promise<void> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
+
+    return this.http.delete(`${this.perguntaUrl}/${id}`, { headers })
+      .toPromise()
+      .then(() => null);
   }
 
   listarTodas(): Promise<any> {

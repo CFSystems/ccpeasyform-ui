@@ -48,13 +48,6 @@ export class PerguntaSearchComponent implements OnInit {
       );
   }
 
-  pesquisarOpcoes(id: number) {
-    this.perguntaService.pesquisarOpcao(id)
-      .then(resultado => {
-        this.opcoes = resultado;
-      })
-  }
-
   aoMudarPagina(event: LazyLoadEvent) {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
@@ -105,8 +98,8 @@ export class PerguntaSearchComponent implements OnInit {
   }
 
   displayInfo: boolean = false;
-  showDialogInfo(id: number) {
-    this.pesquisarOpcoes(id);
+  showDialogInfo(opcoes: any) {
+    this.opcoes = opcoes;
     this.displayInfo = true;
   }
 
