@@ -32,7 +32,7 @@ export class Contato {
     id: number;
     nome: string;
     cpf: string;
-    number: string;
+    identificador: string;
 }
 
 export class Usuario {
