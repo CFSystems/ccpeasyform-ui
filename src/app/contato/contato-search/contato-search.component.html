@@ -1,0 +1,56 @@
+<form autocomplete="off" (ngSubmit)="pesquisar()">
+  <div class="ui-g">
+    <div class="ui-g-8 ui-fluid">
+      <div class="ui-inputgroup">
+        <button pButton type="submit" icon="fa fa-search"></button>
+        <input pInputText type="text" name="nome" [(ngModel)]="filtroValor" placeholder="Digite aqui o nome do contato">
+        <p-dropdown name="opcaoFiltro" [options]="filtros" [autoWidth]="false" [(ngModel)]="filtroOpcao" placeholder="Selecione"
+          required></p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-2 ui-fluid">
+      <button pButton type="button" icon="fa fa-plus" label="Novo Contato" class="ui-button-success" (click)="novoContato = true"></button>
+    </div>
+  </div>
+</form>
+
+<div *ngIf="novoContato">
+    <app-contato-add (atualizarTabela)="fecharNovoContato($event)"></app-contato-add>
+</div>
+
+<div class="ui-g">
+
+  <div class="ui-g-12">
+    <p-table [value]="contatos" [paginator]="true" [rows]="filtro.itensPorPagina" [responsive]="true" [lazy]="true" [totalRecords]="totalRegistros"
+      (onLazyLoad)="aoMudarPagina($event)" #tabela>
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 50px">ID</th>
+          <th>Nome</th>
+          <th style="width: 170px">CPF</th>
+          <th style="width: 150px">Identificador</th>
+          <th style="width: 90px"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-contato>
+        <tr>
+          <td style="width: 50px; text-align: center">{{contato.id}}</td>
+          <td>{{contato.nome}}</td>
+          <td style="width: 170px; text-align: center">{{contato.cpf}}</td>
+          <td style="width: 150px; text-align: center">{{contato.identificador}}</td>
+          <td style="width: 90px; text-align: center">
+            <button pButton (click)="fecharDialogContatoSearch(false, contato)" icon="fa fa-check" pTooltip="Selecionar" tooltipPosition="top"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5">
+            Nenhum contato encontrado
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>

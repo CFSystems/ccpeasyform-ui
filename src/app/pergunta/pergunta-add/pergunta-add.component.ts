@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+import { MessageService } from 'primeng/components/common/messageservice';
+
 import { Pergunta, Opcao } from '../../core/model';
 import { PerguntaService } from '../pergunta.service';
-import { MessageService } from 'primeng/components/common/messageservice';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
@@ -27,7 +28,7 @@ export class PerguntaAddComponent implements OnInit {
   @Input() perguntaEditar: Pergunta;
   @Input() editando: boolean;
 
-  @Output() displayDialog = new EventEmitter;
+  @Output() displayDialog = new EventEmitter();
 
   constructor(
     private perguntaService: PerguntaService,

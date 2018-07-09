@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+import { MessageService } from 'primeng/components/common/messageservice';
+
 import { Campanha } from '../../core/model';
 import { FormularioService } from '../../formulario/formulario.service';
 import { CampanhaService } from '../campanha.service';
-import { MessageService } from 'primeng/components/common/messageservice';
 import { ErrorHandlerService } from '../../core/error-handler.service';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-campanha-add',
@@ -34,7 +36,7 @@ export class CampanhaAddComponent implements OnInit {
   }
 
   carregarFormularios() {
-    return this.formularioService.listarTodas()
+    return this.formularioService.listarAtivos()
       .then(formularios => {
         this.formulariosSource = formularios;
       })

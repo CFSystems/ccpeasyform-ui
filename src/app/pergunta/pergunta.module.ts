@@ -15,7 +15,7 @@ import { MessageModule } from 'primeng/message';
 import { SharedModule } from '../shared/shared.module';
 
 import { PerguntaAddComponent } from './pergunta-add/pergunta-add.component';
-import { PerguntaSearchComponent } from './pergunta-search/pergunta-search.component';
+import { PerguntaMainComponent } from './pergunta-main/pergunta-main.component';
 
 @NgModule({
   imports: [
@@ -36,11 +36,11 @@ import { PerguntaSearchComponent } from './pergunta-search/pergunta-search.compo
   ],
   declarations: [
     PerguntaAddComponent,
-    PerguntaSearchComponent
+    PerguntaMainComponent,
   ],
   exports: [
     PerguntaAddComponent,
-    PerguntaSearchComponent
+    PerguntaMainComponent
   ]
 })
 export class PerguntaModule { }

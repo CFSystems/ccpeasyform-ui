@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
 import { FormularioFiltro, FormularioService } from '../formulario.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
-import { Formulario } from '../../core/model';
-
 
 @Component({
   selector: 'app-formulario-search',
@@ -17,12 +15,13 @@ export class FormularioSearchComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new FormularioFiltro();
-  formularios = [];
   perguntas = [];
   @ViewChild('tabela') grid;
 
-  formularioEdit = new Formulario();
-  editando: boolean;
+  @Input() formularios = [];
+
+  @Output() displayFormularioSearch = new EventEmitter();
+  @Output() formulario = new EventEmitter();
 
   constructor(
     private formularioService: FormularioService,
@@ -53,42 +52,9 @@ export class FormularioSearchComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
-  displayInfo: boolean = false;
-  showDialogInfo(perguntas: any) {
-    this.displayInfo = true;
-    this.perguntas = perguntas;
-  }
-
-  display: boolean = false;
-  abrirDialogFormulario(editando: boolean, id: number) {
-    this.editando = editando;
-    this.display = true;
-    if(editando){
-      this.formularioService.pesquisarFormularioPorId(id)
-      .then(resultado => {
-        this.formularioEdit = resultado;
-      })
-      .catch(erro => this.errorService.handle(erro)
-      );
-    }
-  }
-
-  fecharDialogFormulario(display: boolean){
-    this.display = display;
-    this.pesquisar();
-  }
-
-  alternarStatus(formulario: any): void {
-    const novoStatus = formulario.ativo;
-    
-    this.formularioService.mudarStatus(formulario.id, novoStatus)
-      .then(() => {
-        const acao = novoStatus ? 'ativado' : 'desativado';
-
-        formulario.ativo = novoStatus;
-        this.messageService.add({ severity: 'success', detail: 'Formulário ' + acao + ' com sucesso!'})
-      })
-      .catch(erro => this.errorService.handle(erro));
+  fecharDialogFormularioSearch(display: boolean, formulario: any){
+    this.displayFormularioSearch.emit(display);
+    this.formulario.emit(formulario);
   }
 
 }

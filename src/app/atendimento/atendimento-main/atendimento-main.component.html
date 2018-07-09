@@ -1,0 +1,85 @@
+<div class="container">
+
+  <h1>Atendimento</h1>
+
+  <div class="ui-g">
+
+    <div class="ui-g-12">
+      <p-fieldset legend="Contato">
+        <div class="ui-g-4">
+          <button pButton type="button" [label]="contatoSelecionado ? 'Alterar Contato' : 'Selecionar Contato'" (click)="showDialogContatoSearch()"></button>
+        </div>
+        <div class="ui-g-8">
+          <h4 *ngIf="contatoSelecionado">Contato selecionado: {{contato.nome}}</h4>
+        </div>
+      </p-fieldset>
+    </div>
+
+    <div class="ui-g-12" *ngIf="contatoSelecionado">
+      <p-fieldset legend="Campanha">
+        <div class="ui-g-4">
+          <button pButton type="button" [label]="campanhaSelecionada ? 'Alterar Campanha' : 'Selecionar Campanha'" (click)="showDialogCampanhaSearch()"></button>
+        </div>
+        <div class="ui-g-8">
+          <h4 *ngIf="campanhaSelecionada">Campanha selecionada: {{campanha.nome}} - {{campanha.cliente}}</h4>
+        </div>
+      </p-fieldset>
+    </div>
+
+    <div class="ui-g-12" *ngIf="campanhaSelecionada">
+      <p-fieldset legend="Formulário">
+        <div class="ui-g-4">
+          <button pButton type="button" [label]="formularioSelecionado ? 'Alterar Formulário' : 'Selecionar Formulário'" (click)="showDialogFormularioSearch()"></button>
+        </div>
+        <div class="ui-g-8">
+          <h4 *ngIf="formularioSelecionado">Formulário selecionado: {{formulario.nome}}</h4>
+        </div>
+      </p-fieldset>
+    </div>
+
+    <div class="ui-g-12" *ngIf="formularioSelecionado">
+      <form #formAddRespostas="ngForm" autocomplete="off" (ngSubmit)="salvarAtendimento(formAddRespostas)">
+        <p-fieldset legend="Perguntas">
+          <div class="ui-g-12" *ngFor="let pergunta of perguntas">
+            <label>{{pergunta.nome}}</label>
+            <div *ngIf="pergunta.tipo === 'RespostaUnica'">
+              <div *ngFor="let opcao of pergunta.opcoes">
+                <p-radioButton [name]="'opcoes_pergunta'+pergunta.id" [value]="opcao.nome" [label]="opcao.nome" [(ngModel)]="respostas[pergunta.id]"></p-radioButton>
+              </div>
+            </div>
+            <div *ngIf="pergunta.tipo === 'MultiplaEscolha'">
+              <div *ngFor="let opcao of pergunta.opcoes; index as iO">
+                <p-checkbox [name]="'opcoes_pergunta'+pergunta.id" [value]="opcao.nome" [label]="opcao.nome" [(ngModel)]="respostasMultiplas"></p-checkbox>
+              </div>
+            </div>
+            <div *ngIf="pergunta.tipo === 'Texto'">
+              <input pInputText type="text" [name]="'opcao_pergunta'+pergunta.id" required minlength="5" [(ngModel)]="respostas[pergunta.id]">
+            </div>
+          </div>
+        </p-fieldset>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Finalizar Atendimento" class="ui-button-success"></button>
+          <button pButton type="button" label="Cancelar Atendimento" class="ui-button-danger" (click)="limpar(formAddRespostas)"></button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <p-dialog header="Selecione uma Campanha" [(visible)]="displayCampanhaSearch" modal="true" responsive="true" width="1250"
+    closeOnEscape="false">
+    <app-campanha-search (displayCampanhaSearch)="fecharDialogCampanhaSearch($event)" (campanha)="carregarCampanha($event)"></app-campanha-search>
+  </p-dialog>
+
+  <p-dialog header="Selecione um Formulário" [(visible)]="displayFormularioSearch" modal="true" responsive="true" width="1250"
+    closeOnEscape="false">
+    <app-formulario-search [formularios]="campanha.formularios" (displayFormularioSearch)="fecharDialogFormularioSearch($event)"
+      (formulario)="carregarFormulario($event)"></app-formulario-search>
+  </p-dialog>
+
+  <p-dialog header="Selecione um Contato" [(visible)]="displayContatoSearch" modal="true" responsive="true" width="1250" closeOnEscape="false">
+    <app-contato-search (displayContatoSearch)="fecharDialogContatoSearch($event)" (contato)="carregarContato($event)"></app-contato-search>
+  </p-dialog>
+
+</div>

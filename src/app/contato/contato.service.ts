@@ -1,26 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Http, URLSearchParams, Headers } from '@angular/http';
-
 import { environment } from '../../environments/environment';
-import { Campanha } from '../core/model';
+import { Contato } from '../core/model';
 
-export class CampanhaFiltro {
+export class ContatoFiltro {
   nome: string;
-  status: string;
+  cpf: string;
+  identificador: string;
   pagina = 0;
   itensPorPagina = 5;
 }
 
-@Injectable()
-export class CampanhaService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ContatoService {
 
-  campanhaUrl: string;
+  contatoUrl: string;
 
   constructor(private http: Http) {
-    this.campanhaUrl = `${environment.apiUrl}/ccpeasyform-api/campanha`;
+    this.contatoUrl = `${environment.apiUrl}/ccpeasyform-api/contato`;
   }
 
-  pesquisarCampanha(filtro: CampanhaFiltro): Promise<any> {
+  pesquisarContato(filtro: ContatoFiltro): Promise<any> {
     const params = new URLSearchParams();
     const headers = new Headers();
 
@@ -33,17 +35,21 @@ export class CampanhaService {
       params.set('nome', filtro.nome);
     }
 
-    if (filtro.status) {
-      params.set('status', filtro.status);
+    if (filtro.cpf) {
+      params.set('cpf', filtro.cpf);
     }
 
-    return this.http.get(`${this.campanhaUrl}?`, { headers, search: params })
+    if (filtro.identificador) {
+      params.set('identificador', filtro.identificador);
+    }
+
+    return this.http.get(`${this.contatoUrl}?`, { headers, search: params })
       .toPromise()
       .then(response => {
         const responseJson = response.json();
 
         const resultado = {
-          campanhas: responseJson.content,
+          contatos: responseJson.content,
           total: responseJson.totalElements
         };
 
@@ -51,11 +57,11 @@ export class CampanhaService {
       })
   }
 
-  pesquisarCampanhaPorId(id: number): Promise<any> {
+  pesquisarContatoPorId(id: number): Promise<any> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
 
-    return this.http.get(`${this.campanhaUrl}/${id}`, { headers })
+    return this.http.get(`${this.contatoUrl}/${id}`, { headers })
       .toPromise()
       .then(response => {
         const resultado = response.json();
@@ -63,13 +69,13 @@ export class CampanhaService {
       })
   }
 
-  adicionarCampanha(campanha: Campanha): Promise<Campanha> {
+  adicionarContato(formulario: Contato): Promise<Contato> {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
     headers.append('Content-Type', 'application/json');
 
-    return this.http.post(this.campanhaUrl,
-      JSON.stringify(campanha), { headers })
+    return this.http.post(this.contatoUrl,
+      JSON.stringify(formulario), { headers })
       .toPromise()
       .then(response => {
         const resultado = response.json();
@@ -77,12 +83,4 @@ export class CampanhaService {
       })
   }
 
-  mudarStatus(id: number): Promise<void> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.put(`${this.campanhaUrl}/${id}/mudarStatus`, null, { headers })
-      .toPromise()
-      .then(() => null);
-  }
 }

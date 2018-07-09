@@ -12,12 +12,18 @@
 
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
     <li class="navbar-usuario">Administrador</li>
-    <li class="navbar-menuitem">
-      <a href="#">Perguntas</a>
+    <li class="navbar-menuitem" routerLinkActive="ativo">
+      <a routerLink="/perguntas">Perguntas</a>
     </li>
-    <li class="navbar-menuitem">
-      <a href="#">Formulários</a>
+    <li class="navbar-menuitem" routerLinkActive="ativo">
+      <a routerLink="/formularios">Formulários</a>
     </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo">
+        <a routerLink="/campanhas">Campanhas</a>
+      </li>
+      <li class="navbar-menuitem" routerLinkActive="ativo">
+          <a routerLink="/atendimento">Atendimento</a>
+        </li>
     <li class="navbar-menuitem">
       <a href="#">Logout</a>
     </li>

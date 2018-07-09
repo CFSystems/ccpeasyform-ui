@@ -84,11 +84,15 @@ export class FormularioService {
       })
   }
 
-  listarTodas(): Promise<any> {
+  listarAtivos(): Promise<any> {
+    const params = new URLSearchParams();
     const headers = new Headers();
+
     headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
 
-    return this.http.get(this.formularioUrl, { headers })
+    params.set('ativo', 'true');
+
+    return this.http.get(`${this.formularioUrl}?`, { headers, search: params })
       .toPromise()
       .then(response => response.json().content);
   }

@@ -7,14 +7,11 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import { PickListModule } from 'primeng/picklist';
-import { DropdownModule } from 'primeng/dropdown';
 
 import { SharedModule } from '../shared/shared.module';
-import { CampanhaSearchComponent } from './campanha-search/campanha-search.component';
-import { CampanhaAddComponent } from './campanha-add/campanha-add.component';
-import { CampanhaMainComponent } from './campanha-main/campanha-main.component';
-
+import { ContatoSearchComponent } from './contato-search/contato-search.component';
+import { ContatoAddComponent } from './contato-add/contato-add.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -26,20 +23,17 @@ import { CampanhaMainComponent } from './campanha-main/campanha-main.component';
     TableModule,
     TooltipModule,
     DialogModule,
-    PickListModule,
     DropdownModule,
-    
+
     SharedModule
   ],
   declarations: [
-    CampanhaSearchComponent,
-    CampanhaAddComponent,
-    CampanhaMainComponent
+    ContatoAddComponent,
+    ContatoSearchComponent
   ],
   exports: [
-    CampanhaSearchComponent,
-    CampanhaAddComponent,
-    CampanhaMainComponent
+    ContatoAddComponent,
+    ContatoSearchComponent
   ]
 })
-export class CampanhaModule { }
+export class ContatoModule { }

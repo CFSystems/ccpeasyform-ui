@@ -1,0 +1,35 @@
+<form #formAddContato="ngForm" autocomplete="off" (ngSubmit)="salvarContato(formAddContato)">
+
+    <div class="ui-g">
+  
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" [(ngModel)]="contato.nome" #nome="ngModel" required minlength="5">
+  
+        <app-message [control]="nome" error="required" text="Informe o nome"></app-message>
+        <app-message [control]="nome" error="minlength" text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres"></app-message>
+      </div>
+  
+      <div class="ui-g-12 ui-fluid">
+        <label>CPF</label>
+        <input pInputText type="text" name="cpf" [(ngModel)]="contato.cpf" #cpf="ngModel" required minlength="5">
+  
+        <app-message [control]="cpf" error="required" text="Informe o CPF"></app-message>
+        <app-message [control]="cpf" error="minlength" text="Mínimo de {{ cpf.errors?.minlength?.requiredLength }} caracteres"></app-message>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+          <label>Identificador</label>
+          <input pInputText type="text" name="identificador" [(ngModel)]="contato.identificador" #identificador="ngModel" required minlength="5">
+    
+          <app-message [control]="identificador" error="required" text="Informe um identificador"></app-message>
+          <app-message [control]="identificador" error="minlength" text="Mínimo de {{ identificador.errors?.minlength?.requiredLength }} caracteres"></app-message>
+        </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar Contato" [disabled]="formAddContato.invalid"></button>
+        <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="finalizar(formAddContato)"></button>
+      </div>
+  
+    </div>
+  </form>

@@ -13,6 +13,7 @@ import { PickListModule } from 'primeng/picklist';
 import { SharedModule } from '../shared/shared.module';
 import { FormularioSearchComponent } from './formulario-search/formulario-search.component';
 import { FormularioAddComponent } from './formulario-add/formulario-add.component';
+import { FormularioMainComponent } from './formulario-main/formulario-main.component';
 
 @NgModule({
   imports: [
@@ -31,11 +32,13 @@ import { FormularioAddComponent } from './formulario-add/formulario-add.componen
   ],
   declarations: [
     FormularioSearchComponent,
-    FormularioAddComponent
+    FormularioAddComponent,
+    FormularioMainComponent
   ],
   exports: [
     FormularioSearchComponent,
-    FormularioAddComponent
+    FormularioAddComponent,
+    FormularioMainComponent
   ]
 })
 export class FormularioModule { }

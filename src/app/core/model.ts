@@ -27,3 +27,31 @@ export class Campanha {
     status: string;
     formularios: Array<Formulario>;
 }
+
+export class Contato {
+    id: number;
+    nome: string;
+    cpf: string;
+    number: string;
+}
+
+export class Usuario {
+    id: number;
+    nome: string
+}
+
+export class Atendimento {
+    id: number;
+    contato: Contato;
+    campanha: Campanha;
+    formulario: Formulario;
+    usuario: Usuario;
+    dataAtendimento: Date;
+}
+
+export class Resposta {
+    id: number;
+    atendimento: Atendimento;
+    pergunta: Pergunta;
+    resposta: string;
+}

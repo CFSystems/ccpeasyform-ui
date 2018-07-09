@@ -8,11 +8,11 @@ import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Pergunta } from '../../core/model';
 
 @Component({
-  selector: 'app-pergunta-search',
-  templateUrl: './pergunta-search.component.html',
-  styleUrls: ['./pergunta-search.component.css']
+  selector: 'app-pergunta-main',
+  templateUrl: './pergunta-main.component.html',
+  styleUrls: ['./pergunta-main.component.css']
 })
-export class PerguntaSearchComponent implements OnInit {
+export class PerguntaMainComponent implements OnInit {
 
   totalRegistros = 0;
   filtro = new PerguntaFiltro();

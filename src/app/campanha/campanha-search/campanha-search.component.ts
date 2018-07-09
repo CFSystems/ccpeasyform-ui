@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 import { LazyLoadEvent } from 'primeng/components/common/api';
@@ -20,8 +20,8 @@ export class CampanhaSearchComponent implements OnInit {
   formularios = [];
   @ViewChild('tabela') grid;
 
-  campanhaEdit = new Campanha();
-  editando: boolean;
+  @Output() displayCampanhaSearch = new EventEmitter();
+  @Output() campanha = new EventEmitter();
 
   constructor(
     private campanhaService: CampanhaService,
@@ -34,6 +34,7 @@ export class CampanhaSearchComponent implements OnInit {
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
+    this.filtro.status = "Em Andamento";
     if (this.filtro.pagina === 0) {
       this.grid.first = 0;
     }
@@ -52,37 +53,9 @@ export class CampanhaSearchComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
-  displayInfo: boolean = false;
-  showDialogInfo(formularios: any) {
-    this.displayInfo = true;
-    this.formularios = formularios;
+  fecharDialogCampanhaSearch(display: boolean, campanha: any){
+    this.displayCampanhaSearch.emit(display);
+    this.campanha.emit(campanha);
   }
 
-  display: boolean = false;
-  abrirDialogCampanha(editando: boolean, id: number) {
-    this.editando = editando;
-    this.display = true;
-    if(editando){
-      this.campanhaService.pesquisarCampanhaPorId(id)
-      .then(resultado => {
-        this.campanhaEdit = resultado;
-      })
-      .catch(erro => this.errorService.handle(erro)
-      );
-    }
-  }
-
-  fecharDialogCampanha(display: boolean){
-    this.display = display;
-    this.pesquisar();
-  }
-
-  atualizarStatus(campanha: any): void {
-    this.campanhaService.mudarStatus(campanha.id)
-      .then(() => {
-        this.messageService.add({ severity: 'success', detail: 'Status da campanha ' +campanha.nome+ ' alterado com sucesso!'})
-        this.pesquisar(this.filtro.pagina);
-      })
-      .catch(erro => this.errorService.handle(erro));
-  }
 }
