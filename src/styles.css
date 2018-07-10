@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face{
+  font-family: Britanic;
+  src: url(assets/fonts/BRITANIC.TTF)
+}
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     color: #404C51;
+    background-image: url(assets/images/LOGO_CCP_MARCADAGUA.png);
+    background-repeat: no-repeat;
+    background-position: center 90px;
   }
   
 a {
