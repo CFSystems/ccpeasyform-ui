@@ -8,3 +8,5 @@ app.get('/*', function(req, res) {
 });
 
 app.listen(process.env.PORT || 4200);
+
+console.log('Servidor rodando em http://localhost:4200');

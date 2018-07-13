@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -40,7 +41,9 @@ const routes: Routes = [
     ContatoModule,
     AtendimentoModule
   ],
-  providers: [],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: '/ccpeasyform-ui'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
