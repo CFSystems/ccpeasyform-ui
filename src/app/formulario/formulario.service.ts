@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams, Headers } from '@angular/http';
+import { HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { Formulario } from '../core/model';
+import { FactoryHttp } from '../seguranca/factory-http';
 
 export class FormularioFiltro {
   nome: string;
@@ -17,84 +18,75 @@ export class FormularioService {
 
   private formulario = new Formulario;
 
-  constructor(private http: Http) {
-    this.formularioUrl = `${environment.apiUrl}/ccpeasyform-api/formulario`;
+  constructor(private http: FactoryHttp) {
+    this.formularioUrl = `${environment.apiUrl}/formulario`;
   }
 
   pesquisarFormulario(filtro: FormularioFiltro): Promise<any> {
-    const params = new URLSearchParams();
-    const headers = new Headers();
-
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    params.set('page', filtro.pagina.toString());
-    params.set('size', filtro.itensPorPagina.toString());
+    let params = new HttpParams({
+      fromObject: {
+        page: filtro.pagina.toString(),
+        size: filtro.itensPorPagina.toString()
+      }
+    });
 
     if (filtro.nome) {
-      params.set('nome', filtro.nome);
+      params = params.set('nome', filtro.nome);
     }
 
-    return this.http.get(`${this.formularioUrl}?`, { headers, search: params })
+    return this.http.get<any>(`${this.formularioUrl}?`, { params })
       .toPromise()
       .then(response => {
-        const responseJson = response.json();
-
         const resultado = {
-          formularios: responseJson.content,
-          total: responseJson.totalElements
+          formularios: response.content,
+          total: response.totalElements
         };
-
         return resultado;
       })
   }
 
   pesquisarFormularioPorId(id: number): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.get(`${this.formularioUrl}/${id}`, { headers })
+    return this.http.get<any>(`${this.formularioUrl}/${id}`)
       .toPromise()
       .then(response => {
-        const resultado = response.json();
+        const resultado = response;
         return resultado;
       })
   }
 
-  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
+  adicionarFormulario(formulario: Formulario): Promise<Formulario> {
+    return this.http.post<Formulario>(this.formularioUrl, formulario)
+      .toPromise()
+      .then(response => {
+        const resultado = response;
+        return resultado;
+      })
+  }
 
-    return this.http.put(`${this.formularioUrl}/${codigo}/ativo`, ativo, { headers })
+  atualizarFormulario(formulario: Formulario): Promise<Formulario> {
+    return this.http.put<Formulario>(`${this.formularioUrl}/${formulario.id}`, formulario)
+      .toPromise()
+      .then(response => {
+        const formularioAlterado = response;
+        return formularioAlterado;
+      });
+  }
+
+  mudarStatus(id: number, ativo: boolean): Promise<void> {
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/json');
+    return this.http.put(`${this.formularioUrl}/${id}/ativo`, ativo, { headers })
       .toPromise()
       .then(() => null);
   }
 
-  adicionarFormulario(formulario: Formulario): Promise<Formulario> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.formularioUrl,
-      JSON.stringify(formulario), { headers })
-      .toPromise()
-      .then(response => {
-        const resultado = response.json();
-        return resultado;
-      })
-  }
-
   listarAtivos(): Promise<any> {
-    const params = new URLSearchParams();
-    const headers = new Headers();
-
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    params.set('ativo', 'true');
-
-    return this.http.get(`${this.formularioUrl}?`, { headers, search: params })
+    let params = new HttpParams();
+    params = params.set('ativo', 'true');
+    
+    return this.http.get<any>(`${this.formularioUrl}?`, { params })
       .toPromise()
-      .then(response => response.json().content);
+      .then(response => response.content);
   }
 
 }

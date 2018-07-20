@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   envName: 'dev',
-  apiUrl: 'http://localhost:8080'
+  apiUrl: 'http://localhost:8080/ccpeasyform-api',
+
+  tokenWhitelistedDomains: [ /localhost:8080/ ],
+  tokenBlacklistedRoutes: [/\/oauth\/token/]
 };
 
 /*

@@ -37,7 +37,11 @@ export class Contato {
 
 export class Usuario {
     id: number;
-    nome: string
+    nome: string;
+    matricula: string;
+    email: string;
+    ativo: boolean;
+    permissoes: Array<Permissao>;
 }
 
 export class Atendimento {
@@ -54,4 +58,9 @@ export class Resposta {
     atendimento: Atendimento;
     pergunta: Pergunta;
     resposta: string;
+}
+
+export class Permissao {
+    id: number;
+    descricao: string;
 }

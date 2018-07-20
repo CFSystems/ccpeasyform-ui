@@ -36,9 +36,7 @@ import { FormularioMainComponent } from './formulario-main/formulario-main.compo
     FormularioMainComponent
   ],
   exports: [
-    FormularioSearchComponent,
-    FormularioAddComponent,
-    FormularioMainComponent
+    FormularioSearchComponent
   ]
 })
 export class FormularioModule { }

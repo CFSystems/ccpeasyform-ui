@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { PerguntaService, PerguntaFiltro } from '../pergunta.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Pergunta } from '../../core/model';
+import { Title } from '../../../../node_modules/@angular/platform-browser';
 
 @Component({
   selector: 'app-pergunta-main',
@@ -27,10 +28,12 @@ export class PerguntaMainComponent implements OnInit {
     private perguntaService: PerguntaService,
     private errorService: ErrorHandlerService,
     private messageService: MessageService,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('CCP EASY FORM - Perguntas')
    }
 
   pesquisar(pagina = 0) {

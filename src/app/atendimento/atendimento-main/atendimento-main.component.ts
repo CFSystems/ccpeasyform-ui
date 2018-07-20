@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { Campanha, Formulario, Contato, Atendimento, Usuario, Resposta } from '../../core/model';
 import { AtendimentoService } from '../atendimento.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
+import { Title } from '../../../../node_modules/@angular/platform-browser';
 
 @Component({
   selector: 'app-atendimento-main',
@@ -38,10 +39,12 @@ export class AtendimentoMainComponent implements OnInit {
   constructor(
     private atendimentoService: AtendimentoService,
     private messageService: MessageService,
-    private errorService: ErrorHandlerService
+    private errorService: ErrorHandlerService,
+    private title: Title
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('CCP EASY FORM - Atendimento');
   }
 
 

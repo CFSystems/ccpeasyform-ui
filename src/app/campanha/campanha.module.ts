@@ -37,9 +37,7 @@ import { CampanhaMainComponent } from './campanha-main/campanha-main.component';
     CampanhaMainComponent
   ],
   exports: [
-    CampanhaSearchComponent,
-    CampanhaAddComponent,
-    CampanhaMainComponent
+    CampanhaSearchComponent
   ]
 })
 export class CampanhaModule { }

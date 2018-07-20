@@ -20,7 +20,7 @@ export class FormularioAddComponent implements OnInit {
   @Input() formulario = new Formulario();
   @Input() editando: boolean;
 
-  @Output() displayDialog = new EventEmitter;
+  @Output() displayDialog = new EventEmitter();
 
   constructor(
     private perguntaService: PerguntaService,
@@ -44,16 +44,24 @@ export class FormularioAddComponent implements OnInit {
   salvarFormulario(form: FormControl) {
     if(this.editando){
       this.formulario.perguntas = this.perguntasTargetEdit;
+      this.formularioService.atualizarFormulario(this.formulario)
+      .then(() => {
+        this.messageService.add({ severity: 'success', detail: 'Formuário atualizado com sucesso!' });
+        this.finalizar(form);
+      })
+      .catch(erro => this.errorService.handle(erro)
+      );
     } else {
       this.formulario.perguntas = this.perguntasTarget;
-    }
-    this.formularioService.adicionarFormulario(this.formulario)
-      .then(resultado => {
+      this.formularioService.adicionarFormulario(this.formulario)
+      .then(() => {
         this.messageService.add({ severity: 'success', detail: 'Formuário adicionado com sucesso!' });
         this.finalizar(form);
       })
       .catch(erro => this.errorService.handle(erro)
       );
+    }
+    
   }
 
   finalizar(form: FormControl) {

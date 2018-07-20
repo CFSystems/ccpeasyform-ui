@@ -31,6 +31,6 @@ import { ContatoModule } from '../contato/contato.module';
     ContatoModule
   ],
   declarations: [AtendimentoMainComponent],
-  exports: [AtendimentoMainComponent]
+  exports: []
 })
 export class AtendimentoModule { }

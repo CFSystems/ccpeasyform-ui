@@ -1,0 +1,45 @@
+<form #formAddUsuario="ngForm" autocomplete="off" (ngSubmit)="salvarUsuario(formAddUsuario)">
+  <div class="container">
+    <div class="ui-g">
+      <div class="ui-g-3 ui-fluid" *ngIf="editando">
+        <label>ID</label>
+        <input pInputText type="text" name="id" [(ngModel)]="usuario.id" #id="ngModel" disabled>
+      </div>
+
+      <div class="ui-g-9 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" [(ngModel)]="usuario.nome" #nome="ngModel">
+      </div>
+
+      <div class="ui-g-4 ui-fluid">
+        <label>Matrícula</label>
+        <input pInputText type="text" name="matricula" [(ngModel)]="usuario.matricula" #matricula="ngModel">
+      </div>
+
+      <div class="ui-g-8 ui-fluid">
+        <label>E-mail</label>
+        <input pInputText type="text" name="email" [(ngModel)]="usuario.email" #email="ngModel">
+      </div>
+
+      <div class="ui-g-4 ui-fluid">
+        <label>Senha</label>
+        <input pInputText type="password" name="senha" [(ngModel)]="usuario.senha" #senha="ngModel">
+      </div>
+
+      <div class="ui-g-8 ui-fluid">
+        <label>Permissões</label>
+        <p-multiSelect  name="permissao" [options]="opcoes" [(ngModel)]="permissoesSelecionadas" defaultLabel="Selecione" [showHeader]="false" #permissao required></p-multiSelect>
+      </div>
+
+      <div class="ui-g-6 ui-fluid">
+        <label>Status</label>
+        <p-inputSwitch name="ativo" [(ngModel)]="usuario.ativo" #ativo="ngModel"></p-inputSwitch>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar"></button>
+        <button pButton type="button" label="Cancelar" class="ui-button-danger" (click)="finalizar(formAddUsuario)"></button>
+      </div>
+    </div>
+  </div>
+</form>

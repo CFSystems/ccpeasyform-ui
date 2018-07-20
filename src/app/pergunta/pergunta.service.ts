@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
+
 import { Pergunta, Opcao } from '../core/model';
 import { environment } from '../../environments/environment';
+import { FactoryHttp } from '../seguranca/factory-http';
+
 
 export class PerguntaFiltro {
   nome: string;
@@ -19,33 +22,31 @@ export class PerguntaService {
 
   private pergunta = new Pergunta();
 
-
-  constructor(private http: Http) {
-    this.perguntaUrl = `${environment.apiUrl}/ccpeasyform-api/pergunta`;
-    this.opcaoUrl = `${environment.apiUrl}/ccpeasyform-api/opcao`;
+  constructor(private http: FactoryHttp) {
+    this.perguntaUrl = `${environment.apiUrl}/pergunta`;
+    this.opcaoUrl = `${environment.apiUrl}/opcao`;
   }
 
   pesquisarPergunta(filtro: PerguntaFiltro): Promise<any> {
-    const params = new URLSearchParams();
-    const headers = new Headers();
-
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    params.set('page', filtro.pagina.toString());
-    params.set('size', filtro.itensPorPagina.toString());
+    let params = new HttpParams({
+      fromObject: {
+        page: filtro.pagina.toString(),
+        size: filtro.itensPorPagina.toString()
+      }
+    })
 
     if (filtro.nome) {
-      params.set('nome', filtro.nome);
+      params = params.set('nome', filtro.nome);
     }
 
-    return this.http.get(`${this.perguntaUrl}?`, { headers, search: params })
+    return this.http.get<any>(`${this.perguntaUrl}?`, { params })
       .toPromise()
       .then(response => {
-        const responseJson = response.json();
+        const perguntas = response.content;
 
         const resultado = {
-          perguntas: responseJson.content,
-          total: responseJson.totalElements
+          perguntas, 
+          total: response.totalElements
         };
 
         return resultado;
@@ -53,77 +54,55 @@ export class PerguntaService {
   }
 
   pesquisarPerguntaPorId(id: number): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.get(`${this.perguntaUrl}/${id}`, { headers })
+    return this.http.get(`${this.perguntaUrl}/${id}`)
       .toPromise()
       .then(response => {
-        const resultado = response.json();
+        const resultado = response;
         return resultado;
       })
   }
 
   adicionarPergunta(pergunta: Pergunta): Promise<Pergunta> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.perguntaUrl,
-      JSON.stringify(pergunta), { headers })
+    return this.http.post<Pergunta>(this.perguntaUrl, pergunta)
       .toPromise()
       .then(response => {
-        const resultado = response.json();
+        const resultado = response;
         return resultado;
       })
   }
 
-  adicionarOpcao(opcao: Opcao): Promise<Pergunta> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.opcaoUrl,
-      JSON.stringify(opcao), { headers })
+  adicionarOpcao(opcao: Opcao): Promise<Opcao> {
+    return this.http.post<Opcao>(this.opcaoUrl, opcao)
       .toPromise()
-      .then(response => response.json());
+      .then(response => {
+        const resultado = response;
+        return resultado;
+      });
   }
 
   atualizarPergunta(pergunta: Pergunta): Promise<Pergunta> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.put(`${this.perguntaUrl}/${pergunta.id}`,
-        JSON.stringify(pergunta), { headers })
+    return this.http.put<Pergunta>(`${this.perguntaUrl}/${pergunta.id}`, pergunta)
       .toPromise()
       .then(response => {
-        const perguntaAlterada = response.json() as Pergunta;
+        const perguntaAlterada = response;
         return perguntaAlterada;
       });
   }
 
   editarPergunta(pergunta: Pergunta) {
     this.pergunta = pergunta;
-    console.log(JSON.stringify(this.pergunta));
   }
 
   excluirPergunta(id: number): Promise<void> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.delete(`${this.perguntaUrl}/${id}`, { headers })
+    return this.http.delete(`${this.perguntaUrl}/${id}`)
       .toPromise()
       .then(() => null);
   }
 
   listarTodas(): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.get(this.perguntaUrl, { headers })
+    return this.http.get<any>(this.perguntaUrl)
       .toPromise()
-      .then(response => response.json().content);
+      .then(response => response.content);
   }
 
 }

@@ -46,17 +46,24 @@ export class CampanhaAddComponent implements OnInit {
   salvarCampanha(form: FormControl) {
     if(this.editando){
       this.campanha.formularios = this.formulariosTargetEdit;
+      this.campanhaService.atualizarCampanha(this.campanha)
+      .then(() => {
+        this.messageService.add({ severity: 'success', detail: 'Campanha atualizada com sucesso!' });
+        this.finalizar(form);
+      })
+      .catch(erro => this.errorService.handle(erro)
+      );
     } else {
       this.campanha.formularios = this.formulariosTarget;
-    }
-    this.campanha.status = "Pendente";
-    this.campanhaService.adicionarCampanha(this.campanha)
-      .then(resultado => {
+      this.campanha.status = "Pendente";
+      this.campanhaService.adicionarCampanha(this.campanha)
+      .then(() => {
         this.messageService.add({ severity: 'success', detail: 'Campanha adicionada com sucesso!' });
         this.finalizar(form);
       })
       .catch(erro => this.errorService.handle(erro)
       );
+    }
   }
 
   finalizar(form: FormControl) {

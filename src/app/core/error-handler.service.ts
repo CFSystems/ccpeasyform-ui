@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { MessageService } from 'primeng/components/common/messageservice';
+
+import { NotAuthenticatedError } from '../seguranca/factory-http';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +12,8 @@ import { MessageService } from 'primeng/components/common/messageservice';
 export class ErrorHandlerService {
 
   constructor(
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) { }
 
   handle(errorResponse: any) {
@@ -15,11 +21,30 @@ export class ErrorHandlerService {
 
     if (typeof errorResponse === 'string') {
       msg = errorResponse;
-    } else {
-      msg = 'Erro ao processar serviço remoto. Tente novamente.';
-      console.error('Ocorreu um erro', errorResponse);
+    
+    } else if (errorResponse instanceof NotAuthenticatedError) {
+      msg = 'Sua sessão expirou!';
+      this.router.navigate(['/login']);
+    
+    } else if (errorResponse instanceof HttpErrorResponse
+      && errorResponse.status >= 400 && errorResponse.status <= 499) {
+    msg = 'Ocorreu um erro ao processar a sua solicitação';
+
+    if (errorResponse.status === 403) {
+      msg = 'Você não tem permissão para executar esta ação';
     }
 
-    this.messageService.add({severity:'error', detail:msg});
+    try {
+      msg = errorResponse.error[0].mensagemUsuario;
+    } catch (e) { }
+
+    console.error('Ocorreu um erro', errorResponse);
+
+  } else {
+    msg = 'Erro ao processar serviço remoto. Tente novamente.';
+    console.error('Ocorreu um erro', errorResponse);
+  }
+
+  this.messageService.add({ severity: 'error', detail: msg });
   }
 }

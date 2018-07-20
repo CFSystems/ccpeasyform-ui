@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams, Headers } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
+
 import { environment } from '../../environments/environment';
 import { Contato } from '../core/model';
+import { FactoryHttp } from '../seguranca/factory-http';
 
 export class ContatoFiltro {
   nome: string;
@@ -18,39 +20,36 @@ export class ContatoService {
 
   contatoUrl: string;
 
-  constructor(private http: Http) {
-    this.contatoUrl = `${environment.apiUrl}/ccpeasyform-api/contato`;
+  constructor(private http: FactoryHttp) {
+    this.contatoUrl = `${environment.apiUrl}/contato`;
   }
 
   pesquisarContato(filtro: ContatoFiltro): Promise<any> {
-    const params = new URLSearchParams();
-    const headers = new Headers();
-
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    params.set('page', filtro.pagina.toString());
-    params.set('size', filtro.itensPorPagina.toString());
+    let params = new HttpParams({
+      fromObject: {
+        page: filtro.pagina.toString(),
+        size: filtro.itensPorPagina.toString()
+      }
+    });
 
     if (filtro.nome) {
-      params.set('nome', filtro.nome);
+      params = params.set('nome', filtro.nome);
     }
 
     if (filtro.cpf) {
-      params.set('cpf', filtro.cpf);
+      params = params.set('cpf', filtro.cpf);
     }
 
     if (filtro.identificador) {
-      params.set('identificador', filtro.identificador);
+      params = params.set('identificador', filtro.identificador);
     }
 
-    return this.http.get(`${this.contatoUrl}?`, { headers, search: params })
+    return this.http.get<any>(`${this.contatoUrl}?`, { params })
       .toPromise()
       .then(response => {
-        const responseJson = response.json();
-
         const resultado = {
-          contatos: responseJson.content,
-          total: responseJson.totalElements
+          contatos: response.content,
+          total: response.totalElements
         };
 
         return resultado;
@@ -58,27 +57,19 @@ export class ContatoService {
   }
 
   pesquisarContatoPorId(id: number): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-
-    return this.http.get(`${this.contatoUrl}/${id}`, { headers })
+    return this.http.get<any>(`${this.contatoUrl}/${id}`)
       .toPromise()
       .then(response => {
-        const resultado = response.json();
+        const resultado = response;
         return resultado;
       })
   }
 
-  adicionarContato(formulario: Contato): Promise<Contato> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AY2ZzeXN0ZW1zLmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.contatoUrl,
-      JSON.stringify(formulario), { headers })
+  adicionarContato(contato: Contato): Promise<Contato> {
+    return this.http.post<Contato>(this.contatoUrl, contato)
       .toPromise()
       .then(response => {
-        const resultado = response.json();
+        const resultado = response;
         return resultado;
       })
   }

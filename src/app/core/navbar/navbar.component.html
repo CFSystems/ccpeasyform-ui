@@ -17,21 +17,24 @@
   </div>
 
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
-    <li class="navbar-usuario">Administrador</li>
-    <li class="navbar-menuitem" routerLinkActive="ativo">
+    <li class="navbar-usuario">{{ auth.jwtPayload?.nome }}</li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
       <a routerLink="/perguntas">Perguntas</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
       <a routerLink="/formularios">Formulários</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo">
-        <a routerLink="/campanhas">Campanhas</a>
-      </li>
-      <li class="navbar-menuitem" routerLinkActive="ativo">
-          <a routerLink="/atendimento">Atendimento</a>
-        </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
+      <a routerLink="/campanhas">Campanhas</a>
+    </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR','SUPERVISOR','OPERADOR'])">
+      <a routerLink="/atendimento">Atendimento</a>
+    </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
+      <a routerLink="/usuarios">Usuários</a>
+    </li>
     <li class="navbar-menuitem">
-      <a href="#">Logout</a>
+      <a href="javascript:;" (click)="logout()">Logout</a>
     </li>
   </ul>
 

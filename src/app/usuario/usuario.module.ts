@@ -4,18 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { MessagesModule } from 'primeng/messages';
-import { MessageModule } from 'primeng/message';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 import { SharedModule } from '../shared/shared.module';
-
-import { PerguntaAddComponent } from './pergunta-add/pergunta-add.component';
-import { PerguntaMainComponent } from './pergunta-main/pergunta-main.component';
+import { UsuarioMainComponent } from './usuario-main/usuario-main.component';
+import { UsuarioAddComponent } from './usuario-add/usuario-add.component';
 
 @NgModule({
   imports: [
@@ -24,20 +21,17 @@ import { PerguntaMainComponent } from './pergunta-main/pergunta-main.component';
 
     InputTextModule,
     ButtonModule,
-    DropdownModule,
     TableModule,
     TooltipModule,
     DialogModule,
-    SelectButtonModule,
-    MessagesModule,
-    MessageModule,
+    InputSwitchModule,
+    MultiSelectModule,
 
     SharedModule
   ],
   declarations: [
-    PerguntaAddComponent,
-    PerguntaMainComponent,
-  ],
-  exports: []
+    UsuarioMainComponent,
+    UsuarioAddComponent
+  ]
 })
-export class PerguntaModule { }
+export class UsuarioModule { }

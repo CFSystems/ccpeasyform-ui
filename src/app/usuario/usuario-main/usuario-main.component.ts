@@ -1,38 +1,37 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 import { LazyLoadEvent } from 'primeng/components/common/api';
 
-import { CampanhaFiltro, CampanhaService } from '../campanha.service';
+import { UsuarioFiltro, UsuarioService } from '../usuario.service';
+import { Usuario } from '../../core/model';
 import { ErrorHandlerService } from '../../core/error-handler.service';
-import { Campanha } from '../../core/model';
-import { Title } from '../../../../node_modules/@angular/platform-browser';
 
 @Component({
-  selector: 'app-campanha-main',
-  templateUrl: './campanha-main.component.html',
-  styleUrls: ['./campanha-main.component.css']
+  selector: 'app-usuario-main',
+  templateUrl: './usuario-main.component.html',
+  styleUrls: ['./usuario-main.component.css']
 })
-export class CampanhaMainComponent implements OnInit {
+export class UsuarioMainComponent implements OnInit {
 
   totalRegistros = 0;
-  filtro = new CampanhaFiltro();
-  campanhas = [];
-  formularios = [];
+  filtro = new UsuarioFiltro();
+  usuarios = [];
   @ViewChild('tabela') grid;
 
-  campanhaEdit = new Campanha();
+  usuarioEdit = new Usuario();
   editando: boolean;
 
   constructor(
-    private campanhaService: CampanhaService,
+    private usuarioService: UsuarioService,
     private errorService: ErrorHandlerService,
     private messageService: MessageService,
     private title: Title
   ) { }
 
   ngOnInit() {
-    this.title.setTitle('CCP EASY FORM - Campanhas');
+    this.title.setTitle('CCP EASY FORM - Usuários');
   }
 
   pesquisar(pagina = 0) {
@@ -41,10 +40,10 @@ export class CampanhaMainComponent implements OnInit {
       this.grid.first = 0;
     }
 
-    this.campanhaService.pesquisarCampanha(this.filtro)
+    this.usuarioService.pesquisarUsuario(this.filtro)
       .then(resultado => {
         this.totalRegistros = resultado.total;
-        this.campanhas = resultado.campanhas;
+        this.usuarios = resultado.usuarios;
       })
       .catch(erro => this.errorService.handle(erro)
       );
@@ -55,36 +54,34 @@ export class CampanhaMainComponent implements OnInit {
     this.pesquisar(pagina);
   }
 
-  displayInfo: boolean = false;
-  showDialogInfo(formularios: any) {
-    this.displayInfo = true;
-    this.formularios = formularios;
-  }
-
   display: boolean = false;
-  abrirDialogCampanha(editando: boolean, id: number) {
+  abrirDialogUsuario(editando: boolean, id: number) {
     this.editando = editando;
     this.display = true;
     if(editando){
-      this.campanhaService.pesquisarCampanhaPorId(id)
+      this.usuarioService.pesquisarUsuarioPorId(id)
       .then(resultado => {
-        this.campanhaEdit = resultado;
+        this.usuarioEdit = resultado;
       })
       .catch(erro => this.errorService.handle(erro)
       );
     }
   }
 
-  fecharDialogCampanha(display: boolean){
+  fecharDialogUsuario(display: boolean){
     this.display = display;
     this.pesquisar();
   }
 
-  atualizarStatus(campanha: any): void {
-    this.campanhaService.mudarStatus(campanha.id)
+  alternarStatus(usuario: any): void {
+    const novoStatus = usuario.ativo;
+    
+    this.usuarioService.mudarStatus(usuario.id, novoStatus)
       .then(() => {
-        this.messageService.add({ severity: 'success', detail: 'Status da campanha ' +campanha.nome+ ' alterado com sucesso!'})
-        this.pesquisar(this.filtro.pagina);
+        const acao = novoStatus ? 'ativado' : 'desativado';
+
+        usuario.ativo = novoStatus;
+        this.messageService.add({ severity: 'success', detail: 'Usuário ' + acao + ' com sucesso!'})
       })
       .catch(erro => this.errorService.handle(erro));
   }
