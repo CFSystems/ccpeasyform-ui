@@ -21,11 +21,12 @@ export class UsuarioAddComponent implements OnInit {
   ];
 
   @Input() usuario = new Usuario();
+  @Input() permissoesSelecionadas = [];
   @Input() editando: boolean;
 
   @Output() displayDialog = new EventEmitter();
 
-  permissoesSelecionadas = [];
+  
 
   constructor(
     private usuarioService: UsuarioService,
@@ -67,6 +68,7 @@ export class UsuarioAddComponent implements OnInit {
 
   finalizar(form: FormControl) {
     form.reset();
+    this.permissoesSelecionadas = [];
     this.displayDialog.emit(false);
   }
 

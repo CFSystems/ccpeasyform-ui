@@ -14,7 +14,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 export class FormularioAddComponent implements OnInit {
 
   perguntasSource = [];
-  perguntasTarget = []
+  perguntasTarget = [];
   @Input() perguntasTargetEdit = [];
 
   @Input() formulario = new Formulario();

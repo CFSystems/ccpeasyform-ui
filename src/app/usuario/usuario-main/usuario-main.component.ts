@@ -18,6 +18,7 @@ export class UsuarioMainComponent implements OnInit {
   totalRegistros = 0;
   filtro = new UsuarioFiltro();
   usuarios = [];
+  permissoes = [];
   @ViewChild('tabela') grid;
 
   usuarioEdit = new Usuario();
@@ -62,6 +63,10 @@ export class UsuarioMainComponent implements OnInit {
       this.usuarioService.pesquisarUsuarioPorId(id)
       .then(resultado => {
         this.usuarioEdit = resultado;
+        for(let perm of this.usuarioEdit.permissoes){
+          this.permissoes.push(perm.id);
+        }
+        console.log(JSON.stringify(this.permissoes));
       })
       .catch(erro => this.errorService.handle(erro)
       );
@@ -69,6 +74,7 @@ export class UsuarioMainComponent implements OnInit {
   }
 
   fecharDialogUsuario(display: boolean){
+    this.permissoes = [];
     this.display = display;
     this.pesquisar();
   }

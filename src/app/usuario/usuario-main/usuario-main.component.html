@@ -1,6 +1,5 @@
 <p-dialog [header]="editando ? 'Editar Usuário' : 'Novo Usuário'" [(visible)]="display" modal="true" responsive="true" width="1250" height="400" [closeOnEscape]="false" [closable]="false">
-  <app-usuario-add [usuario]="usuarioEdit" [editando]="editando"
-    (displayDialog)="fecharDialogUsuario($event)"></app-usuario-add>
+  <app-usuario-add [usuario]="usuarioEdit" [editando]="editando" [permissoesSelecionadas]="permissoes" (displayDialog)="fecharDialogUsuario($event)"></app-usuario-add>
 </p-dialog>
 
 <div class="container">

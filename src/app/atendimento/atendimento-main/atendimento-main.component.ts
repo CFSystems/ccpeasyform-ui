@@ -7,6 +7,7 @@ import { Campanha, Formulario, Contato, Atendimento, Usuario, Resposta } from '.
 import { AtendimentoService } from '../atendimento.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Title } from '../../../../node_modules/@angular/platform-browser';
+import { AuthService } from '../../seguranca/auth.service';
 
 @Component({
   selector: 'app-atendimento-main',
@@ -38,6 +39,7 @@ export class AtendimentoMainComponent implements OnInit {
 
   constructor(
     private atendimentoService: AtendimentoService,
+    private authService: AuthService,
     private messageService: MessageService,
     private errorService: ErrorHandlerService,
     private title: Title
@@ -96,7 +98,7 @@ export class AtendimentoMainComponent implements OnInit {
 
 
   salvarAtendimento(form: FormControl) {
-    this.usuario.id = 1
+    this.usuario.id = this.authService.jwtPayload.id;
     this.atendimento.usuario = this.usuario;
 
     this.atendimentoService.adicionarAtendimento(this.atendimento)
