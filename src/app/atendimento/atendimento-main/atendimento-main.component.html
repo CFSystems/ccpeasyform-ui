@@ -44,22 +44,22 @@
             <label>{{pergunta.nome}}</label>
             <div *ngIf="pergunta.tipo === 'RespostaUnica'">
               <div class="ui-g-12" *ngFor="let opcao of pergunta.opcoes">
-                <p-radioButton [name]="'opcoes_pergunta'+pergunta.id" [value]="opcao.nome" [label]="opcao.nome" [(ngModel)]="respostas[pergunta.id]"></p-radioButton>
+                <p-radioButton [name]="'opcoes_pergunta'+pergunta.id" [value]="opcao.nome" [label]="opcao.nome" [(ngModel)]="respostas[pergunta.id]" required></p-radioButton>
               </div>
             </div>
             <div class="ui-g-12" *ngIf="pergunta.tipo === 'MultiplaEscolha'">
               <div *ngFor="let opcao of pergunta.opcoes; index as iO">
-                <p-checkbox [name]="'opcoes_pergunta'+pergunta.id" [value]="opcao.nome" [label]="opcao.nome" [(ngModel)]="respostasMultiplas"></p-checkbox>
+                <p-checkbox [name]="'opcoes_pergunta'+pergunta.id" [value]="opcao.nome" [label]="opcao.nome" [(ngModel)]="respostasMultiplas" required></p-checkbox>
               </div>
             </div>
             <div class="ui-g-12 ui-fluid" *ngIf="pergunta.tipo === 'Texto'">
-              <input pInputText type="text" [name]="'opcao_pergunta'+pergunta.id" required minlength="5" [(ngModel)]="respostas[pergunta.id]">
+              <input pInputText type="text" [name]="'opcao_pergunta'+pergunta.id" required minlength="5" [(ngModel)]="respostas[pergunta.id]" required>
             </div>
           </div>
         </p-fieldset>
 
         <div class="ui-g-12">
-          <button pButton type="submit" label="Finalizar Atendimento" class="ui-button-success"></button>
+          <button pButton type="submit" label="Finalizar Atendimento" class="ui-button-success" [disabled]="formAddRespostas.invalid"></button>
           <button pButton type="button" label="Cancelar Atendimento" class="ui-button-danger" (click)="limpar(formAddRespostas)"></button>
         </div>
       </form>

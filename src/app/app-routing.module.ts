@@ -12,7 +12,7 @@ import { AuthGuard } from './seguranca/auth-guard';
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full'},
+    { path: '', redirectTo: 'atendimento', pathMatch: 'full'},
     { path: 'login', component: LoginFormComponent},
     { 
       path: 'perguntas',

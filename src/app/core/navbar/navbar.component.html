@@ -18,19 +18,19 @@
 
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
     <li class="navbar-usuario">{{ auth.jwtPayload?.nome }}</li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])" (click)="exibindoMenu = false">
       <a routerLink="/perguntas">Perguntas</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])" (click)="exibindoMenu = false">
       <a routerLink="/formularios">Formulários</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])" (click)="exibindoMenu = false">
       <a routerLink="/campanhas">Campanhas</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR','SUPERVISOR','OPERADOR'])">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR','SUPERVISOR','OPERADOR'])" (click)="exibindoMenu = false">
       <a routerLink="/atendimento">Atendimento</a>
     </li>
-    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao(['ADMINISTRADOR'])" (click)="exibindoMenu = false">
       <a routerLink="/usuarios">Usuários</a>
     </li>
     <li class="navbar-menuitem">
