@@ -10,10 +10,24 @@ import { LoginFormComponent } from './seguranca/login-form/login-form.component'
 import { UsuarioMainComponent } from './usuario/usuario-main/usuario-main.component';
 import { AuthGuard } from './seguranca/auth-guard';
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
+import { DashboardMainComponent } from './dashboard/dashboard-main/dashboard-main.component';
+import { DashboardRepostaComponent } from './dashboard/dashboard-reposta/dashboard-reposta.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'atendimento', pathMatch: 'full'},
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     { path: 'login', component: LoginFormComponent},
+    {
+      path: 'dashboard',
+      component: DashboardMainComponent,
+      canActivate: [AuthGuard],
+      data: { roles: ['ADMINISTRADOR','SUPERVISOR'] }
+    },
+    {
+      path: 'dashboard-respostas',
+      component: DashboardRepostaComponent,
+      canActivate: [AuthGuard],
+      data: { roles: ['ADMINISTRADOR','SUPERVISOR'] }
+    },
     { 
       path: 'perguntas',
       component: PerguntaMainComponent,

@@ -66,7 +66,6 @@ export class UsuarioMainComponent implements OnInit {
         for(let perm of this.usuarioEdit.permissoes){
           this.permissoes.push(perm.id);
         }
-        console.log(JSON.stringify(this.permissoes));
       })
       .catch(erro => this.errorService.handle(erro)
       );

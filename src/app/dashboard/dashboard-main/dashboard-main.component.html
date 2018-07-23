@@ -1,0 +1,33 @@
+<div class="container">
+
+  <div class="ui-g">
+    <div class="ui-g-12 ui-md-4">
+      <h1>Dashboard</h1>
+    </div>
+    <div class="ui-g-12 ui-md-4" style="text-align: center; margin-top: 25px">
+      <button pButton type="button" label="Gráficos por Respostas" class="ui-button-info" (click)="irGraficoRespostas()"></button>
+    </div>
+    <div class="ui-g-12 ui-md-4" style="text-align: right; margin-top: 25px">
+      <button pButton type="button" label="Extrair base" class="ui-button-secondary" (click)="gerarCsvCompleto()"></button>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel header="Atendimentos por Campanha">
+        <p-chart type="pie" [data]="atendCampanha"></p-chart>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6">
+      <p-panel header="Atendimentos por Usuário">
+        <p-chart type="bar" [data]="atendUsuario" [options]="optionsAtendUsuario"></p-chart>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12">
+      <p-panel header="Atendimentos por Dia - Mês Atual">
+        <p-chart type="bar" [data]="atendDia" [options]="optionsAtendDia" height="350"></p-chart>
+      </p-panel>
+    </div>
+
+  </div>
+</div>

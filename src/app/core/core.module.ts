@@ -23,6 +23,7 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 import { FactoryHttp } from '../seguranca/factory-http';
 import { UsuarioService } from '../usuario/usuario.service';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 registerLocaleData(localePt);
 
@@ -55,6 +56,7 @@ registerLocaleData(localePt);
     AuthService,
     FactoryHttp,
     UsuarioService,
+    DashboardService,
 
     JwtHelperService,
 

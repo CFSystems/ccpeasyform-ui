@@ -58,6 +58,12 @@ export class CampanhaService {
       })
   }
 
+  listarCampanha(): Promise<Campanha[]> {
+    return this.http.get<any>(`${this.campanhaUrl}/listar`)
+      .toPromise()
+      .then(response => response);
+  }
+
   adicionarCampanha(campanha: Campanha): Promise<Campanha> {
     return this.http.post<Campanha>(this.campanhaUrl, campanha)
       .toPromise()

@@ -34,7 +34,7 @@ export class PerguntaMainComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('CCP EASY FORM - Perguntas')
-   }
+  }
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
@@ -85,17 +85,17 @@ export class PerguntaMainComponent implements OnInit {
   abrirDialogPergunta(editando: boolean, id: number) {
     this.editando = editando;
     this.display = true;
-    if(editando){
+    if (editando) {
       this.perguntaService.pesquisarPerguntaPorId(id)
-      .then(resultado => {
-        this.perguntaEdit = resultado;
-      })
-      .catch(erro => this.errorService.handle(erro)
-      );
+        .then(resultado => {
+          this.perguntaEdit = resultado;
+        })
+        .catch(erro => this.errorService.handle(erro)
+        );
     }
   }
 
-  fecharDialogPergunta(display: boolean){
+  fecharDialogPergunta(display: boolean) {
     this.display = display;
     this.pesquisar();
   }

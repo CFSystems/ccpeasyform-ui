@@ -14,6 +14,7 @@ import { AtendimentoModule } from './atendimento/atendimento.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { UsuarioModule } from './usuario/usuario.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UsuarioModule } from './usuario/usuario.module';
     AtendimentoModule,
     SegurancaModule,
     UsuarioModule,
+    DashboardModule,
     AppRoutingModule
   ],
   providers: [

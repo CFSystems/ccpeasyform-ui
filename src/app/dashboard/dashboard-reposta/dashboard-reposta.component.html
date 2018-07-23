@@ -1,0 +1,35 @@
+<div class="container">
+
+  <h1>Gráficos por Resposta</h1>
+
+  <div class="ui-g">
+    
+      <form #formCarregaGrafico="ngForm" autocomplete="off" (ngSubmit)="carregarPerguntasPorFormulario()">
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Campanha: </label>
+          <p-dropdown name="campanhaSelecionada" [autoWidth]="false" [filter]="true" [options]="campanhas" placeholder="Selecione "
+            [(ngModel)]="campanhaSelecionada" (onChange)="carregarFormularios()" required></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-4 ui-fluid">
+          <label>Formulário: </label>
+          <p-dropdown name="formularioSelecionado" [autoWidth]="false" [filter]="true" [options]="formularios" placeholder="Selecione"
+            [(ngModel)]="formularioSelecionado" required></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-3">
+          <button pButton type="submit" label="Carregar Gráficos" [disabled]="formCarregaGrafico.invalid"></button>
+        </div>
+      </form>
+    
+    <div class="ui-g-12 ui-md-3 " style="text-align: right">
+      <button pButton type="button" label="Voltar" (click)="voltarDashboard()" class="ui-button-info"></button>
+    </div>
+
+    <div class="ui-g-12 ui-md-6" *ngFor="let graf of respostaFormulario">
+      <p-panel [header]="graf.title">
+        <p-chart type="horizontalBar" [data]="graf" [options]="optionsRespostas"></p-chart>
+      </p-panel>
+    </div>
+
+  </div>
+
+</div>

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../../environments/environment';
 import { Atendimento, Resposta } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
-import { AuthService } from '../seguranca/auth.service';
+
 
 @Injectable({
   providedIn: 'root'
