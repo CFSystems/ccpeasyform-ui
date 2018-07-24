@@ -124,7 +124,7 @@ export class DashboardMainComponent implements OnInit {
 
   gerarCsvCompleto(){
     var opcoes = { 
-      headers: ["ID", "Contato", "Campanha", "Formulario", "Usuario", "Data_Atendimento", "Pergunta", "Resposta"]
+      headers: ["ID", "Contato", "Campanha", "Cliente", "Formulario", "Usuario", "Data_Atendimento", "Pergunta", "Resposta"]
     };
 
     this.dashboardService.atendimentosCompleto()

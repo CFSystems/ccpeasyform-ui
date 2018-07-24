@@ -16,7 +16,6 @@ import { MessageService } from '../../../../node_modules/primeng/components/comm
 export class DashboardRepostaComponent implements OnInit {
 
   respostaFormulario: Array<any> = [];
-  nomePergunta: string;
   campanhas: any[];
   formularios: any[];
   perguntas = [];
@@ -70,7 +69,7 @@ export class DashboardRepostaComponent implements OnInit {
         this.perguntas = resultado.perguntas;
         for (let pergunta of this.perguntas) {
           if (pergunta.tipo === 'RespostaUnica' || pergunta.tipo === 'MultiplaEscolha') {
-            this.carregarRespostasPorPergunta(this.campanhaSelecionada, this.formularioSelecionado, pergunta.id);
+            this.carregarRespostasPorPergunta(this.campanhaSelecionada, this.formularioSelecionado, pergunta.id, pergunta.nome);
           }
         }
       })
@@ -78,13 +77,12 @@ export class DashboardRepostaComponent implements OnInit {
       );
   }
 
-  carregarRespostasPorPergunta(idCampanha: number, idFormulario: number, idPergunta: number) {
+  carregarRespostasPorPergunta(idCampanha: number, idFormulario: number, idPergunta: number, nomePergunta: string) {
     this.dashboardService.respostasPorFormulario(idCampanha, idFormulario, idPergunta)
       .then(dados => {
         if (dados.length != 0) {
-          this.nomePergunta = dados[0].pergunta.nome;
           this.respostaFormulario.push({
-            title: this.nomePergunta,
+            title: nomePergunta,
             labels: dados.map(dado => dado.resposta),
             datasets: [
               {
