@@ -40,6 +40,7 @@ export class Usuario {
     nome: string;
     matricula: string;
     email: string;
+    senha: string;
     ativo: boolean;
     permissoes: Array<Permissao>;
 }

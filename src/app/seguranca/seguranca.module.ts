@@ -7,9 +7,9 @@ import { ButtonModule } from 'primeng/button';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { LoginFormComponent } from './login-form/login-form.component';
-import { environment } from '../../environments/environment';
 import { AuthGuard } from './auth-guard';
 import { LogoutService } from './logout.service';
+import { environment } from '../../environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('token');

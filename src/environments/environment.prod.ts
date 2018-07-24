@@ -3,6 +3,6 @@ export const environment = {
   envName: 'prod',
   apiUrl: 'http://easyform:8080/ccpeasyform-api',
 
-  tokenWhitelistedDomains: [ /easyform:8080/ ],
-  tokenBlacklistedRoutes: [/\/oauth\/token/]
+  tokenWhitelistedDomains: [ new RegExp('easyform:8080') ],
+  tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token') ]
 };

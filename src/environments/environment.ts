@@ -7,8 +7,8 @@ export const environment = {
   envName: 'dev',
   apiUrl: 'http://localhost:8080/ccpeasyform-api',
 
-  tokenWhitelistedDomains: [ /localhost:8080/ ],
-  tokenBlacklistedRoutes: [/\/oauth\/token/]
+  tokenWhitelistedDomains: [ new RegExp('localhost:8080') ],
+  tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token') ]
 };
 
 /*

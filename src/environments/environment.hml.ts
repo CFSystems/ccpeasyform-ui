@@ -3,6 +3,6 @@ export const environment = {
   envName: 'hml',
   apiUrl: 'https://ccpeasyform-api.herokuapp.com/',
 
-  tokenWhitelistedDomains: [ /ccpeasyform-api.herokuapp.com/ ],
-  tokenBlacklistedRoutes: [/\/oauth\/token/]
+  tokenWhitelistedDomains: [ new RegExp('ccpeasyform-api.herokuapp.com') ],
+  tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token') ]
 };

@@ -79,6 +79,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ccpeasyform-ui:build:production"
+            },
+            "hml": {
+              "browserTarget": "ccpeasyform-ui:build:hml"
             }
           }
         },
