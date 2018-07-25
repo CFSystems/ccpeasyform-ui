@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --c=hml"
+    "postinstall": "ng build --c=hml --base-href /ccpeasyform-ui/"
   },
   "private": true,
   "dependencies": {
