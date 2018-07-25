@@ -6,9 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 
 import { NotAuthenticatedError } from '../seguranca/factory-http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ErrorHandlerService {
 
   constructor(

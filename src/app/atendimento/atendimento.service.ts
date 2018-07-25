@@ -6,10 +6,7 @@ import { environment } from '../../environments/environment';
 import { Atendimento, Resposta } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AtendimentoService {
 
   atendimentoUrl: string;

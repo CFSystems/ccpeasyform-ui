@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../../environments/environment';
 import { FactoryHttp } from './factory-http';
 import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LogoutService {
 
   tokensRenokeUrl: string;

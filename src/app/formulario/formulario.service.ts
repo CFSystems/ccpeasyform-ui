@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpHeaders } from '@angular/common/http';
 
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../../environments/environment';
 import { Formulario } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
@@ -16,8 +18,6 @@ export class FormularioService {
 
   formularioUrl: string;
 
-  private formulario = new Formulario;
-
   constructor(private http: FactoryHttp) {
     this.formularioUrl = `${environment.apiUrl}/formulario`;
   }
@@ -31,7 +31,7 @@ export class FormularioService {
     });
 
     if (filtro.nome) {
-      params = params.set('nome', filtro.nome);
+      params = params.append('nome', filtro.nome);
     }
 
     return this.http.get<any>(`${this.formularioUrl}?`, { params })
@@ -82,7 +82,7 @@ export class FormularioService {
 
   listarAtivos(): Promise<any> {
     let params = new HttpParams();
-    params = params.set('ativo', 'true');
+    params = params.append('ativo', 'true');
     
     return this.http.get<any>(`${this.formularioUrl}?`, { params })
       .toPromise()

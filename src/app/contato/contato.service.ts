@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../../environments/environment';
 import { Contato } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
@@ -13,9 +15,7 @@ export class ContatoFiltro {
   itensPorPagina = 5;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ContatoService {
 
   contatoUrl: string;
@@ -33,15 +33,15 @@ export class ContatoService {
     });
 
     if (filtro.nome) {
-      params = params.set('nome', filtro.nome);
+      params = params.append('nome', filtro.nome);
     }
 
     if (filtro.cpf) {
-      params = params.set('cpf', filtro.cpf);
+      params = params.append('cpf', filtro.cpf);
     }
 
     if (filtro.identificador) {
-      params = params.set('identificador', filtro.identificador);
+      params = params.append('identificador', filtro.identificador);
     }
 
     return this.http.get<any>(`${this.contatoUrl}?`, { params })

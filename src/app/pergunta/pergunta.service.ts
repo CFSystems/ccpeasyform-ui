@@ -7,7 +7,6 @@ import { Pergunta, Opcao } from '../core/model';
 import { environment } from '../../environments/environment';
 import { FactoryHttp } from '../seguranca/factory-http';
 
-
 export class PerguntaFiltro {
   nome: string;
   pagina = 0;
@@ -36,7 +35,7 @@ export class PerguntaService {
     })
 
     if (filtro.nome) {
-      params = params.set('nome', filtro.nome);
+      params = params.append('nome', filtro.nome);
     }
 
     return this.http.get<any>(`${this.perguntaUrl}?`, { params })

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpHeaders } from '@angular/common/http';
 
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../../environments/environment';
 import { FactoryHttp } from '../seguranca/factory-http';
 import { Usuario } from '../core/model';
@@ -16,7 +18,7 @@ export class UsuarioService {
 
   usuarioUrl: string;
 
-  private usuario = new Usuario();
+  usuario = new Usuario();
 
   constructor(private http: FactoryHttp) {
     this.usuarioUrl = `${environment.apiUrl}/usuario`;
@@ -31,7 +33,7 @@ export class UsuarioService {
     })
 
     if (filtro.nome) {
-      params = params.set('nome', filtro.nome);
+      params = params.append('nome', filtro.nome);
     }
 
     return this.http.get<any>(`${this.usuarioUrl}?`, { params })

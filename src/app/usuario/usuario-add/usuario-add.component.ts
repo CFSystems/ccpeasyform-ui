@@ -26,8 +26,6 @@ export class UsuarioAddComponent implements OnInit {
 
   @Output() displayDialog = new EventEmitter();
 
-  
-
   constructor(
     private usuarioService: UsuarioService,
     private messageService: MessageService,

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import 'rxjs/add/operator/toPromise';
+
 import { environment } from '../../environments/environment';
 import { Campanha } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
@@ -30,11 +32,11 @@ export class CampanhaService {
     });
 
     if (filtro.nome) {
-      params = params.set('nome', filtro.nome);
+      params = params.append('nome', filtro.nome);
     }
 
     if (filtro.status) {
-      params = params.set('status', filtro.status);
+      params = params.append('status', filtro.status);
     }
 
     return this.http.get<any>(`${this.campanhaUrl}?`, { params })

@@ -6,9 +6,7 @@ import * as moment from 'moment';
 import { FactoryHttp } from '../seguranca/factory-http';
 import { environment } from '../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DashboardService {
 
   dashboardUrl: string;
@@ -20,13 +18,13 @@ export class DashboardService {
   }
 
   atendimentosPorCampanha(): Promise<Array<any>> {
-    return this.http.get<any>(`${this.dashboardUrl}/atendimento/estatisticas/por-campanha`)
+    return this.http.get<Array<any>>(`${this.dashboardUrl}/atendimento/estatisticas/por-campanha`)
       .toPromise()
       .then(response => response);
   }
 
   atendimentosPorUsuario(): Promise<Array<any>> {
-    return this.http.get<any>(`${this.dashboardUrl}/atendimento/estatisticas/por-usuario`)
+    return this.http.get<Array<any>>(`${this.dashboardUrl}/atendimento/estatisticas/por-usuario`)
       .toPromise()
       .then(response => response);
   }
@@ -43,7 +41,7 @@ export class DashboardService {
   }
 
   atendimentosCompleto(): Promise<Array<any>> {
-    return this.http.get<any>(`${this.dashboardUrl}/atendimento/estatisticas/completo`)
+    return this.http.get<Array<any>>(`${this.dashboardUrl}/atendimento/estatisticas/completo`)
       .toPromise()
       .then(response => {
         const dados = response;
