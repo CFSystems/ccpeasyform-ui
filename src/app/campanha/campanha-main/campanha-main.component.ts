@@ -6,7 +6,7 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 import { CampanhaFiltro, CampanhaService } from '../campanha.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Campanha } from '../../core/model';
-import { Title } from '../../../../node_modules/@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-campanha-main',

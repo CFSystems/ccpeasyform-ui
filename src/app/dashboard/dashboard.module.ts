@@ -8,7 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 
 import { DashboardMainComponent } from './dashboard-main/dashboard-main.component';
-import { SharedModule } from './../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { DashboardRepostaComponent } from './dashboard-reposta/dashboard-reposta.component';
 
 @NgModule({

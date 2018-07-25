@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { PerguntaService, PerguntaFiltro } from '../pergunta.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Pergunta } from '../../core/model';
-import { Title } from '../../../../node_modules/@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pergunta-main',

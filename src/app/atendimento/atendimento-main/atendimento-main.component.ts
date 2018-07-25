@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/components/common/messageservice';
 import { Campanha, Formulario, Contato, Atendimento, Usuario, Resposta } from '../../core/model';
 import { AtendimentoService } from '../atendimento.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
-import { Title } from '../../../../node_modules/@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../seguranca/auth.service';
 
 @Component({

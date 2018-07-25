@@ -6,7 +6,6 @@ import { DashboardService } from '../dashboard.service';
 import { CampanhaService } from '../../campanha/campanha.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { FormularioService } from '../../formulario/formulario.service';
-import { MessageService } from '../../../../node_modules/primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-dashboard-reposta',
