@@ -8,13 +8,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
     constructor() { }
 
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // Get the auth header from the service.
-        const authHeader = localStorage.getItem('token');
-        // Clone the request to add the new header.
-        const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + authHeader) });
-        // Pass on the cloned request instead of the original request.
-        return next.handle(authReq);
+        if(req.headers.get('Authorization').length != 0){
+            console.log(req.headers.get('Authorization'));    
+            return next.handle(req);
+        } else {
+            const authHeader = localStorage.getItem('token');
+            const authReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + authHeader) });
+            return next.handle(authReq);
+        }
     }
 
 }
