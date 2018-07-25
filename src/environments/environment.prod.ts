@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   envName: 'prod',
-  apiUrl: 'https://ccpeasyform-api.herokuapp.com',
+  apiUrl: 'http://easyform:8080/ccpeasyform-api',
 
-  tokenWhitelistedDomains: [ new RegExp('https://ccpeasyform-api.herokuapp.com') ],
+  tokenWhitelistedDomains: [ new RegExp('easyform:8080') ],
   tokenBlacklistedRoutes: [ new RegExp('\/oauth\/token') ]
 };
