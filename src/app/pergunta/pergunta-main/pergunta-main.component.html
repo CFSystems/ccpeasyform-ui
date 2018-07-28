@@ -1,6 +1,6 @@
-<p-dialog [header]="editando ? 'Editar Pergunta' : 'Nova Pergunta'" [(visible)]="display" [modal]="true" [responsive]="false"
-  [width]="750" [minWidth]="200" [minY]="150" [closeOnEscape]="false" [closable]="false" [resizable]="false" [draggable]="true"
-  [contentStyle]="{'overflow':'visible'}" [positionTop]="100">
+<p-dialog [header]="editando ? 'Editar Pergunta' : 'Nova Pergunta'" [(visible)]="display" modal="true" responsive="true"
+  width="750" [closeOnEscape]="false" [closable]="false" [draggable]="true" [positionTop]="50" [style]="{'position':'absolute'}"
+  [contentStyle]="{'overflow':'visible'}">
   <app-pergunta-add [perguntaEditar]="perguntaEdit" [editando]="editando" (displayDialog)="fecharDialogPergunta($event)"></app-pergunta-add>
 </p-dialog>
 

@@ -25,7 +25,7 @@ export class AtendimentoMainComponent implements OnInit {
   perguntas = [];
   opcoes = [];
   respostas = [];
-  respostasMultiplas: string[] = [];
+  respostasMultiplas: string[][] = [];
 
   data = new Date().toLocaleDateString;
 
@@ -124,10 +124,9 @@ export class AtendimentoMainComponent implements OnInit {
           );
       }
       if (pergunta.tipo === 'MultiplaEscolha') {
+        this.resposta.atendimento = this.atendimento;
         this.resposta.pergunta = pergunta;
-        for (let resp of this.respostasMultiplas) {
-          this.resposta.atendimento = this.atendimento;
-          this.resposta.pergunta = pergunta;
+        for (let resp of this.respostasMultiplas[pergunta.id]) {
           this.resposta.resposta = resp;
           this.atendimentoService.adicionarRespostas(this.resposta)
             .then(() => {

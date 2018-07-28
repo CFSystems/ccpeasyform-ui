@@ -31,9 +31,11 @@
       <div class="ui-g-12">
         <button pButton type="button" label="Adicionar Opção" (click)="adicionarOpcao()"></button>
       </div>
-      <div class="ui-g-12" *ngFor="let op of listaOpcao">
-        <label>{{op}}</label>
-        <a pButton icon="fa fa-times" pTooltip="Excluir Opção" tooltipPosition="top" (click)="excluirOpcao(op)" class="ui-button-warning"></a>
+      <div class="ui-g-12">
+        <div class="ui-g-4" *ngFor="let op of listaOpcao">
+          <label>{{op}}</label>
+          <a pButton icon="fa fa-times" pTooltip="Excluir Opção" tooltipPosition="top" (click)="excluirOpcao(op)" class="ui-button-warning"></a>
+        </div>
       </div>
     </div>
 
