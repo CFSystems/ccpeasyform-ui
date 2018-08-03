@@ -4,7 +4,7 @@ import { HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 import { environment } from '../../environments/environment';
-import { Formulario } from '../core/model';
+import { Formulario, FormularioPergunta } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
 
 export class FormularioFiltro {
@@ -17,9 +17,11 @@ export class FormularioFiltro {
 export class FormularioService {
 
   formularioUrl: string;
+  formularioPerguntaUrl: string;
 
   constructor(private http: FactoryHttp) {
     this.formularioUrl = `${environment.apiUrl}/formulario`;
+    this.formularioPerguntaUrl = `${environment.apiUrl}/formularioPergunta`;
   }
 
   pesquisarFormulario(filtro: FormularioFiltro): Promise<any> {
@@ -54,6 +56,12 @@ export class FormularioService {
       })
   }
 
+  listarAtivos(): Promise<any> {
+    return this.http.get<any>(`${this.formularioUrl}/listarAtivos`)
+      .toPromise()
+      .then(response => response);
+  }
+
   adicionarFormulario(formulario: Formulario): Promise<Formulario> {
     return this.http.post<Formulario>(this.formularioUrl, formulario)
       .toPromise()
@@ -63,12 +71,18 @@ export class FormularioService {
       })
   }
 
+  adicionarFormularioPergunta(formularioPergunta: FormularioPergunta): Promise<FormularioPergunta> {
+    return this.http.post<FormularioPergunta>(this.formularioPerguntaUrl, formularioPergunta)
+      .toPromise()
+      .then()
+  }
+
   atualizarFormulario(formulario: Formulario): Promise<Formulario> {
     return this.http.put<Formulario>(`${this.formularioUrl}/${formulario.id}`, formulario)
       .toPromise()
       .then(response => {
-        const formularioAlterado = response;
-        return formularioAlterado;
+        const resultado = response;
+        return resultado;
       });
   }
 
@@ -80,13 +94,10 @@ export class FormularioService {
       .then(() => null);
   }
 
-  listarAtivos(): Promise<any> {
-    let params = new HttpParams();
-    params = params.append('ativo', 'true');
-    
-    return this.http.get<any>(`${this.formularioUrl}?`, { params })
+  excluirFormularioPergunta(idFormulario: number): Promise<void> {
+    return this.http.delete(`${this.formularioPerguntaUrl}/${idFormulario}`)
       .toPromise()
-      .then(response => response.content);
+      .then(() => null);
   }
 
 }

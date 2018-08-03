@@ -19,7 +19,7 @@
         <div class="ui-g-12 ui-md-4 ui-fluid">
           <label>Formulário</label>
           <p-dropdown name="formularioSelecionado" [autoWidth]="false" [filter]="true" [options]="formularios" placeholder="Selecione"
-            [(ngModel)]="formularioSelecionado" required></p-dropdown>
+            [(ngModel)]="formularioSelecionado" (onChange)="limparArrays()" required></p-dropdown>
         </div>
         <div class="ui-g-12 ui-md-3 ui-fluid" style="margin-top: 18px;">
           <button pButton type="submit" label="Carregar Gráficos" [disabled]="formCarregaGrafico.invalid"></button>

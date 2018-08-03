@@ -3,6 +3,7 @@ export class Pergunta {
     nome: string;
     descricao: string;
     tipo: string;
+    opcoes: Array<Opcao>;
 }
 
 export class Opcao {
@@ -15,7 +16,16 @@ export class Formulario {
     id: number;
     nome: string;
     ativo: boolean;
-    perguntas: Array<Pergunta>;
+    formularioPergunta: Array<FormularioPergunta>;
+}
+
+export class FormularioPergunta {
+    id: {
+        idFormulario: number;
+        idPergunta: number;
+    }
+    pergunta: Pergunta;
+    ordem: number;
 }
 
 export class Campanha {
@@ -25,7 +35,16 @@ export class Campanha {
     dataInicio: Date;
     dataTermino: Date;
     status: string;
-    formularios: Array<Formulario>;
+    campanhaFormulario: Array<CampanhaFormulario>;
+}
+
+export class CampanhaFormulario {
+    id: {
+        idCampanha: number;
+        idFormulario: number;
+    }
+    formulario: Formulario;
+    ordem: number;
 }
 
 export class Contato {

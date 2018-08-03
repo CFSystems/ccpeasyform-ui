@@ -1,4 +1,4 @@
-<form #formAddCampanha="ngForm" autocomplete="off" (ngSubmit)="salvarCampanha(formAddCampanha)">
+<form #formAddCampanha="ngForm" autocomplete="off" (ngSubmit)="editando ? atualizarCampanha(formAddCampanha) : adicionarCampanha(formAddCampanha)">
     <div class="container">
       <div class="ui-g">
         <div class="ui-g-3 ui-fluid" *ngIf="editando">
@@ -17,7 +17,7 @@
           </div>
   
         <div class="ui-g-12 ui-fluid">
-          <p-pickList [source]="formulariosSource" [target]="editando ? formulariosTargetEdit : formulariosTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
+          <p-pickList [source]="formulariosSource" [target]="formulariosTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
             sourceHeader="Formulários Disponiveis" targetHeader="Formulários Selecionados" [responsive]="true" filterBy="nome" dragdrop="true"
             sourceFilterPlaceholder="Procure pelo nome" targetFilterPlaceholder="Procure pelo nome">
             <ng-template let-formulario pTemplate="item">

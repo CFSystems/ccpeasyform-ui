@@ -1,4 +1,4 @@
-<form #formAddFormulario="ngForm" autocomplete="off" (ngSubmit)="salvarFormulario(formAddFormulario)">
+<form #formAddFormulario="ngForm" autocomplete="off" (ngSubmit)="editando ? atualizarFormulario(formAddFormulario) : adicionarFormulario(formAddFormulario)">
   <div class="container">
     <div class="ui-g">
       <div class="ui-g-3 ui-fluid" *ngIf="editando">
@@ -17,9 +17,9 @@
       </div>
 
       <div class="ui-g-12 ui-fluid">
-        <p-pickList [source]="perguntasSource" [target]="editando ? perguntasTargetEdit : perguntasTarget" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}"
-          sourceHeader="Perguntas Disponiveis" targetHeader="Perguntas Selecionadas" [responsive]="true" filterBy="nome" dragdrop="true"
-          sourceFilterPlaceholder="Procure pelo nome" targetFilterPlaceholder="Procure pelo nome">
+        <p-pickList [source]="perguntasSource" [target]="perguntasTarget" [sourceStyle]="{'height':'300px'}"
+          [targetStyle]="{'height':'300px'}" sourceHeader="Perguntas Disponiveis" targetHeader="Perguntas Selecionadas" [responsive]="true"
+          filterBy="nome" dragdrop="true" sourceFilterPlaceholder="Procure pelo nome" targetFilterPlaceholder="Procure pelo nome">
           <ng-template let-pergunta pTemplate="item">
             <div class="ui-helper-clearfix">
               {{ pergunta.id }} - {{ pergunta.nome }}

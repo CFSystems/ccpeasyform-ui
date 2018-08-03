@@ -49,10 +49,21 @@ export class DashboardRepostaComponent implements OnInit {
   }
 
   carregarFormularios() {
+    this.limparArrays();
     this.formularioSelecionado = undefined;
     this.campanhaService.pesquisarCampanhaPorId(this.campanhaSelecionada)
       .then(resultado => {
-        this.formularios = resultado.formularios.map(formulario => ({
+        var campFormularios = [];
+        var forms = [];
+        campFormularios = resultado.campanhaFormulario;
+        campFormularios.sort(function (obj1, obj2) {
+          return obj1.ordem - obj2.ordem;
+        })
+        for (let form of campFormularios) {
+          forms.push(form.formulario);
+        }
+
+        this.formularios = forms.map(formulario => ({
           label: formulario.nome,
           value: formulario.id
         }));
@@ -62,10 +73,18 @@ export class DashboardRepostaComponent implements OnInit {
   }
 
   carregarPerguntasPorFormulario() {
-    this.respostaFormulario = [];
+    this.limparArrays();
     this.formularioService.pesquisarFormularioPorId(this.formularioSelecionado)
       .then(resultado => {
-        this.perguntas = resultado.perguntas;
+        var formPerguntas = [];
+        formPerguntas = resultado.formularioPergunta;
+        formPerguntas.sort(function (obj1, obj2) {
+          return obj1.ordem - obj2.ordem;
+        })
+        for (let perg of formPerguntas) {
+          this.perguntas.push(perg.pergunta);
+        }
+
         for (let pergunta of this.perguntas) {
           if (pergunta.tipo === 'RespostaUnica' || pergunta.tipo === 'MultiplaEscolha') {
             this.carregarRespostasPorPergunta(this.campanhaSelecionada, this.formularioSelecionado, pergunta.id, pergunta.nome);
@@ -114,6 +133,11 @@ export class DashboardRepostaComponent implements OnInit {
 
   voltarDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  limparArrays(){
+    this.perguntas = [];
+    this.respostaFormulario = [];
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 import { LazyLoadEvent } from 'primeng/components/common/api';
@@ -6,7 +7,6 @@ import { LazyLoadEvent } from 'primeng/components/common/api';
 import { CampanhaFiltro, CampanhaService } from '../campanha.service';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { Campanha } from '../../core/model';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-campanha-main',
@@ -19,9 +19,10 @@ export class CampanhaMainComponent implements OnInit {
   filtro = new CampanhaFiltro();
   campanhas = [];
   formularios = [];
-  @ViewChild('tabela') grid;
+  campFormularios = [];
 
-  campanhaEdit = new Campanha();
+  campanha = new Campanha();
+  @ViewChild('tabela') grid;
   editando: boolean;
 
   constructor(
@@ -56,26 +57,24 @@ export class CampanhaMainComponent implements OnInit {
   }
 
   displayInfo: boolean = false;
-  showDialogInfo(formularios: any) {
+  showDialogInfo(campanha: Campanha) {
+    this.carregarFormulariosPorCampanha(campanha);
     this.displayInfo = true;
-    this.formularios = formularios;
   }
 
   display: boolean = false;
-  abrirDialogCampanha(editando: boolean, id: number) {
+  abrirDialogCampanha(editando: boolean, campanha: Campanha) {
     this.editando = editando;
     this.display = true;
-    if(editando){
-      this.campanhaService.pesquisarCampanhaPorId(id)
-      .then(resultado => {
-        this.campanhaEdit = resultado;
-      })
-      .catch(erro => this.errorService.handle(erro)
-      );
+    if (this.editando) {
+      this.carregarFormulariosPorCampanha(campanha);
+    } else {
+      this.campanha = new Campanha();
+      this.formularios = [];
     }
   }
 
-  fecharDialogCampanha(display: boolean){
+  fecharDialogCampanha(display: boolean) {
     this.display = display;
     this.pesquisar();
   }
@@ -83,10 +82,24 @@ export class CampanhaMainComponent implements OnInit {
   atualizarStatus(campanha: any): void {
     this.campanhaService.mudarStatus(campanha.id)
       .then(() => {
-        this.messageService.add({ severity: 'success', detail: 'Status da campanha ' +campanha.nome+ ' alterado com sucesso!'})
+        this.messageService.add({ severity: 'success', detail: 'Status da campanha ' + campanha.nome + ' alterado com sucesso!' })
         this.pesquisar(this.filtro.pagina);
       })
       .catch(erro => this.errorService.handle(erro));
+  }
+
+  carregarFormulariosPorCampanha(campanha: Campanha) {
+    this.campFormularios = [];
+    this.formularios = [];
+    this.campanha = new Campanha();
+    this.campanha = campanha;
+    this.campFormularios = this.campanha.campanhaFormulario;
+    this.campFormularios.sort(function (obj1, obj2) {
+      return obj1.ordem - obj2.ordem;
+    })
+    for (let form of this.campFormularios) {
+      this.formularios.push(form.formulario);
+    }
   }
 
 }

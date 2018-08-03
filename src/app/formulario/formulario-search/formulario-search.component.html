@@ -1,19 +1,7 @@
-<form autocomplete="off" (ngSubmit)="pesquisar()">
-  <div class="ui-g">
-    <div class="ui-g-8 ui-fluid">
-      <div class="ui-inputgroup">
-        <button pButton type="submit" icon="fa fa-search"></button>
-        <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome" placeholder="Digite aqui o nome do formulário">
-      </div>
-    </div>
-  </div>
-</form>
-
 <div class="ui-g">
 
   <div class="ui-g-12">
-    <p-table [value]="formularios" [paginator]="true" [rows]="filtro.itensPorPagina" [responsive]="true" [lazy]="true" [totalRecords]="totalRegistros"
-      (onLazyLoad)="aoMudarPagina($event)" #tabela>
+    <p-table [value]="formularios" [paginator]="true" [rows]="5" [responsive]="true" #tabela>
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 50px">ID</th>
@@ -33,7 +21,7 @@
       <ng-template pTemplate="emptymessage">
         <tr>
           <td colspan="5">
-            Nenhum formulário encontrada
+            Nenhum formulário encontrado
           </td>
         </tr>
       </ng-template>

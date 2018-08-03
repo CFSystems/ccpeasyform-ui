@@ -74,7 +74,7 @@
 
   <p-dialog header="Selecione um Formulário" [(visible)]="displayFormularioSearch" modal="true" responsive="true" width="1250"
     closeOnEscape="false">
-    <app-formulario-search [formularios]="campanha.formularios" (displayFormularioSearch)="fecharDialogFormularioSearch($event)"
+    <app-formulario-search [formularios]="formularios" (displayFormularioSearch)="fecharDialogFormularioSearch($event)"
       (formulario)="carregarFormulario($event)"></app-formulario-search>
   </p-dialog>
 

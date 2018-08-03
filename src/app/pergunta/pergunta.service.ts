@@ -44,7 +44,7 @@ export class PerguntaService {
         const perguntas = response.content;
 
         const resultado = {
-          perguntas, 
+          perguntas,
           total: response.totalElements
         };
 
@@ -59,6 +59,12 @@ export class PerguntaService {
         const resultado = response;
         return resultado;
       })
+  }
+
+  listarTodas(): Promise<any> {
+    return this.http.get<any>(`${this.perguntaUrl}/listar`)
+      .toPromise()
+      .then(response => response);
   }
 
   adicionarPergunta(pergunta: Pergunta): Promise<Pergunta> {
@@ -96,12 +102,6 @@ export class PerguntaService {
     return this.http.delete(`${this.perguntaUrl}/${id}`)
       .toPromise()
       .then(() => null);
-  }
-
-  listarTodas(): Promise<any> {
-    return this.http.get<any>(this.perguntaUrl)
-      .toPromise()
-      .then(response => response.content);
   }
 
 }

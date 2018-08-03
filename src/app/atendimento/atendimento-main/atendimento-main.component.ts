@@ -17,12 +17,18 @@ import { AuthService } from '../../seguranca/auth.service';
 export class AtendimentoMainComponent implements OnInit {
 
   atendimento = new Atendimento();
-  campanha = new Campanha();
-  formulario = new Formulario();
   contato = new Contato();
+  campanha = new Campanha();
   usuario = new Usuario();
   resposta = new Resposta();
+
+  formulario = new Formulario();
+  campFormularios = [];
+  formularios = [];
+  
+  formPerguntas = [];
   perguntas = [];
+  
   opcoes = [];
   respostas = [];
   respostasMultiplas: string[][] = [];
@@ -58,10 +64,11 @@ export class AtendimentoMainComponent implements OnInit {
     this.displayContatoSearch = display;
   }
 
-  carregarContato(contato: any) {
+  carregarContato(contato: Contato) {
     this.contato = contato;
     this.atendimento.contato = this.contato;
     this.contatoSelecionado = true;
+    this.campanhaSelecionada = false;
   }
 
   showDialogCampanhaSearch() {
@@ -72,9 +79,21 @@ export class AtendimentoMainComponent implements OnInit {
     this.displayCampanhaSearch = display;
   }
 
-  carregarCampanha(campanha: any) {
+  carregarCampanha(campanha: Campanha) {
+    this.campFormularios = [];
+    this.formularios = [];
     this.campanha = campanha;
     this.atendimento.campanha = this.campanha;
+
+    this.campFormularios = this.campanha.campanhaFormulario;
+
+    this.campFormularios.sort(function (obj1, obj2) {
+      return obj1.ordem - obj2.ordem;
+    })
+    for (let form of this.campFormularios) {
+      this.formularios.push(form.formulario);
+    }
+    
     this.formulario = new Formulario();
     this.perguntas = []
     this.campanhaSelecionada = true;
@@ -89,13 +108,22 @@ export class AtendimentoMainComponent implements OnInit {
     this.displayFormularioSearch = display;
   }
 
-  carregarFormulario(formulario: any) {
+  carregarFormulario(formulario: Formulario) {
+    this.formPerguntas = [];
+    this.perguntas = [];
     this.formulario = formulario;
     this.atendimento.formulario = this.formulario;
-    this.perguntas = this.formulario.perguntas;
+
+    this.formPerguntas = this.formulario.formularioPergunta;
+    this.formPerguntas.sort(function(obj1, obj2) {
+      return obj1.ordem - obj2.ordem;
+    })
+    for(let perg of this.formPerguntas){
+      this.perguntas.push(perg.pergunta);
+    }
+
     this.formularioSelecionado = true;
   }
-
 
   salvarAtendimento(form: FormControl) {
     this.usuario.id = this.authService.jwtPayload.id;

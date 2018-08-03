@@ -24,6 +24,9 @@ export class PerguntaMainComponent implements OnInit {
   perguntaEdit = new Pergunta();
   editando: boolean;
 
+  display: boolean = false;
+  displayInfo: boolean = false;
+
   constructor(
     private perguntaService: PerguntaService,
     private errorService: ErrorHandlerService,
@@ -81,7 +84,6 @@ export class PerguntaMainComponent implements OnInit {
       );
   }
 
-  display: boolean = false;
   abrirDialogPergunta(editando: boolean, id: number) {
     this.editando = editando;
     this.display = true;
@@ -100,7 +102,6 @@ export class PerguntaMainComponent implements OnInit {
     this.pesquisar();
   }
 
-  displayInfo: boolean = false;
   showDialogInfo(opcoes: any) {
     this.opcoes = opcoes;
     this.displayInfo = true;

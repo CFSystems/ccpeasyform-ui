@@ -4,7 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 
 import { environment } from '../../environments/environment';
-import { Campanha } from '../core/model';
+import { Campanha, CampanhaFormulario } from '../core/model';
 import { FactoryHttp } from '../seguranca/factory-http';
 
 export class CampanhaFiltro {
@@ -18,9 +18,11 @@ export class CampanhaFiltro {
 export class CampanhaService {
 
   campanhaUrl: string;
+  campanhaFormularioUrl: string;
 
   constructor(private http: FactoryHttp) {
     this.campanhaUrl = `${environment.apiUrl}/campanha`;
+    this.campanhaFormularioUrl = `${environment.apiUrl}/campanhaFormulario`;
   }
 
   pesquisarCampanha(filtro: CampanhaFiltro): Promise<any> {
@@ -75,6 +77,12 @@ export class CampanhaService {
       })
   }
 
+  adicionarCampanhaFormulario(campanhaFormulario: CampanhaFormulario): Promise<CampanhaFormulario> {
+    return this.http.post<CampanhaFormulario>(this.campanhaFormularioUrl, campanhaFormulario)
+      .toPromise()
+      .then()
+  }
+
   atualizarCampanha(campanha: Campanha): Promise<Campanha> {
     return this.http.put<Campanha>(`${this.campanhaUrl}/${campanha.id}`, campanha)
       .toPromise()
@@ -86,6 +94,12 @@ export class CampanhaService {
 
   mudarStatus(id: number): Promise<void> {
     return this.http.put(`${this.campanhaUrl}/${id}/mudarStatus`, null)
+      .toPromise()
+      .then(() => null);
+  }
+
+  excluirCampanhaFormulario(idCampanha: number): Promise<void> {
+    return this.http.delete(`${this.campanhaFormularioUrl}/${idCampanha}`)
       .toPromise()
       .then(() => null);
   }
