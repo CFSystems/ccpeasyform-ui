@@ -25,10 +25,10 @@ export class AtendimentoMainComponent implements OnInit {
   formulario = new Formulario();
   campFormularios = [];
   formularios = [];
-  
+
   formPerguntas = [];
   perguntas = [];
-  
+
   opcoes = [];
   respostas = [];
   respostasMultiplas: string[][] = [];
@@ -93,7 +93,7 @@ export class AtendimentoMainComponent implements OnInit {
     for (let form of this.campFormularios) {
       this.formularios.push(form.formulario);
     }
-    
+
     this.formulario = new Formulario();
     this.perguntas = []
     this.campanhaSelecionada = true;
@@ -115,10 +115,16 @@ export class AtendimentoMainComponent implements OnInit {
     this.atendimento.formulario = this.formulario;
 
     this.formPerguntas = this.formulario.formularioPergunta;
-    this.formPerguntas.sort(function(obj1, obj2) {
+    this.formPerguntas.sort(function (obj1, obj2) {
       return obj1.ordem - obj2.ordem;
     })
-    for(let perg of this.formPerguntas){
+    for (let perg of this.formPerguntas) {
+      perg.pergunta.opcoes.sort(function (obj1, obj2) {
+        if (obj1.nome < obj2.nome) return -1;
+        if (obj1.nome > obj2.nome) return 1;
+        return 0;
+      })
+
       this.perguntas.push(perg.pergunta);
     }
 
